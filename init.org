@@ -145,7 +145,7 @@ Install dependencies:
         (user-org-set-block-bg))
       (when (string-equal user-file-emacs_init (buffer-file-name))
         (org-babel-tangle)
-        (start-process "cask" "*cask*" "bash" "-c" "cask upgrade-cask; cask update")
+        ;; (start-process "cask" "*cask*" "bash" "-c" "cask upgrade-cask; cask update")
         (start-process "git" "*git*" "bash" "-c" (format "cd %s; git add .; git commit -am \"update\"; git push" user-dir-emacs)))))
 #+end_src
 
