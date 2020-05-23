@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: trace
+# key: tr
+# --
+Debug.print_value("${1:param}", $1)

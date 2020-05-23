@@ -1,0 +1,5 @@
+# key: sl
+# name: separation-line
+# --
+// ${1:`(make-string 80 ?\-)`}
+$0

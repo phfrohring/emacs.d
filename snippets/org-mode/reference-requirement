@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: reference-requirement
+# key: refr
+# --
+(ref ${1:req})

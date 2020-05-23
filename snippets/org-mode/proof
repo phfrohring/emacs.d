@@ -1,0 +1,13 @@
+# key: proof
+# name: proof
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+${1:ass}
+
+  1. ${2:goal}
+
+  2. ${3:assertion}
+     ${4:proof: }
+
+  3. Q.E.D.
+     ${5:proof: }

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: item-random-prefix
+# key: ri
+# --
+\item [\tiny{${1:`(downcase (nth 1 (split-string (org-id-new) "-")))`}}] \label{${1:$(yas-text)}}

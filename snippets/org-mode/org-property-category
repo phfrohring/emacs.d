@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: org-property-category
+# key: :c
+# --
+:category: $0

@@ -1,0 +1,8 @@
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# key: as
+# name: anki-source
+# --
+	local_name:
+		source_id:
+		source_url:
+		source_name:

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: trace_script
+# key: trs
+# --
+step "executing: \${BASH_SOURCE[0]}"

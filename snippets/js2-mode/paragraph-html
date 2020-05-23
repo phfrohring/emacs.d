@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: paragraph-html
+# key: <p
+# --
+<p>$0</p>

@@ -1,0 +1,4 @@
+# key: tr
+# name: trace
+# --
+console.log(\`${1:value}: \${$1}\`)

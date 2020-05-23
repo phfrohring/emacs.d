@@ -1,0 +1,21 @@
+# key: ms
+# name: module-comment-structure
+# --
+# Description
+# `(make-string 80 ?\-)`
+# $0
+
+
+
+# Interface
+# `(make-string 80 ?\-)`
+
+
+
+# Requirements
+# `(make-string 80 ?\-)`
+
+
+
+# Implementation
+# `(make-string 80 ?\-)`

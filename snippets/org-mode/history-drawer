@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: history-drawer
+# key: hdr
+# --
+:properties:
+:def:
+:ref:
+:end:
+:timelog:
+:time:
+:end:

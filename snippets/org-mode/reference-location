@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: reference-location
+# key: refl
+# --
+(ref ${1:loc})

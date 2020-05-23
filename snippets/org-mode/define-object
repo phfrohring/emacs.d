@@ -1,0 +1,4 @@
+# key: defob
+# name: define-object
+# --
+(def ${1:obj})

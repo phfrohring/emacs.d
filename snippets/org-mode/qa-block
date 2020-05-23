@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: qa-block
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# key: qa
+# --
+#+id: `(downcase (org-id-new))`
+#+begin_src q/a
+${1:question}
+
+--------
+
+${2:answer}
+#+end_src

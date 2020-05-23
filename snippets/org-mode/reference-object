@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: reference-object
+# key: refo
+# --
+(ref ${1:obj})

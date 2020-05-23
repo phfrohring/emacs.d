@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: ert-deftest
+# key: ert
+# --
+(ert-deftest tr--test-${1:name} ()
+  ""
+  (let ((trace? t))
+    (let
+      ((list-input-output
+         (list
+           (cons input ouput)
+           $2
+           )))
+      (seq-each
+        (lambda (input-output)
+          (tr--trace trace? "log::`(downcase (nth 1 (split-string (org-id-new) "-")))` %s" "test start")
+          (let
+            ((result ($1 (car input-output)))
+              (output (cdr input-output)))
+            (tr--trace trace? "log::`(downcase (nth 1 (split-string (org-id-new) "-")))` result: %s" result)
+            (tr--trace trace? "log::`(downcase (nth 1 (split-string (org-id-new) "-")))` output: %s" output)
+            (should (equal result output))
+            (tr--trace trace? "log::`(downcase (nth 1 (split-string (org-id-new) "-")))` %s" "success!\n")))
+        list-input-output))))

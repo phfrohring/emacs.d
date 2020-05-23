@@ -1,0 +1,4 @@
+# key: logv
+# name: log-variable
+# --
+console.log('log::`(downcase (nth 1 (split-string (org-id-new) "-")))` ${1:var}:\n'.concat(JSON.stringify($1)))

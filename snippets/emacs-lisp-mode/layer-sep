@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: layer-sep
+# key: ls
+# --
+;; ${1:`(make-string 85 ?\-)`}

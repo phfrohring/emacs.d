@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log-variable
+# key: logv
+# --
+(trace "`(downcase (nth 1 (split-string (org-id-new) "-")))`" ${1:var})

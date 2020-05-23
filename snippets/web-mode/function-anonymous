@@ -1,0 +1,4 @@
+# key: af
+# name: function-anonymous
+# --
+(function () { $0 }())

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: bash_library_model
+# key: blm
+# --
+`(usr/read-file "~/bash/mod/library_model.sh")`
+# Extracted from prove_me_wrong.org

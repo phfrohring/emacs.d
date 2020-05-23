@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: exercise
+# key: exercise
+# --
+#+name:   [[def:`(downcase (org-id-new))`]]
+#+begin_exercise
+Question$0
+--------
+Answer
+#+end_exercise

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: reference-goal
+# key: refgoa
+# --
+(ref ${1:goa})

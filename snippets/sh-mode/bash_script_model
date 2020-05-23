@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bash_script_model
+# key: bsm
+# --
+`(usr/read-file "~/bash/mod/script_model.sh")`

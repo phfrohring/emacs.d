@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: define-location
+# key: defl
+# --
+(def ${1:loc})

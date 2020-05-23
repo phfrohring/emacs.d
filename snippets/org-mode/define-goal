@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: define-objective
+# key: defo
+# --
+(def goa$0)

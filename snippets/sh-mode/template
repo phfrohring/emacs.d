@@ -1,0 +1,40 @@
+# key: template
+# name: template
+# --
+#!/usr/bin/env bash
+
+exit_1() { eval "\$__exit_1"; }
+
+err() {
+    local script_path="\${BASH_SOURCE[\${#BASH_SOURCE[@]}-1]}"
+    err_msg="error\n  date: \$(date +'%Y-%m-%dT%H:%M:%S%z')\n  script_path: \$script_path\n  "
+    for key_val in "\$@"; do
+        err_msg="\${err_msg}\${key_val}\n  "
+    done
+
+    echo -e "\$err_msg"
+}
+on_error() {
+
+    : 'Prints an error when an error is detected and exits the script.'
+
+    read -r line file <<<"\$(caller)"
+    culprit=\$(sed "\${line}q;d" "\$file")
+    err "line: \$line" "command: \$culprit"
+    exit_1
+}
+on_exit() {
+    : 'Clean up things'
+}
+setup() {
+    set -ou pipefail >/dev/null
+    readonly __top_pid="\$\$"
+    readonly __exit_1="kill -s TERM \${__top_pid}"
+    trap 'on_error' ERR
+    trap 'excode=\$?; trap "" EXIT; on_exit; exit \$excode' EXIT
+}
+setup
+this_file="\$(readlink -f \${BASH_SOURCE[0]})"
+this_dir="\$(dirname \$this_file)"
+
+$0

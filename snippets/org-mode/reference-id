@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: reference-id
+# key: ref
+# --
+[[ref:${1:uuid}][ref]]

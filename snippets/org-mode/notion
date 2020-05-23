@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: notion
+# key: notion
+# --
+* ${1:notion}
+:properties:
+:type:      notion
+:id:        [[def:`(downcase (org-id-new))`][$1]]
+:end:
+
+
+exercise$0

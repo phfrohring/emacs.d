@@ -1,0 +1,42 @@
+# -*- mode: snippet -*-
+# name: task
+# key: task
+# --
+* Problem
+  :properties:
+  :name:     ${1:name}
+  :id:       ${2:uuid}
+  :end:
+
+
+
+* Solution
+
+
+
+* State
+
+   #+name: objective
+   #+id: (def ${3:uuid})
+   #+begin_src org
+     - [ ] (def obj::${4:uid}::${5:name})
+   #+end_src
+
+
+* Resources
+
+  |----------------------------------+--------------------------------------------|
+  | name                             | reference                                  |
+  |----------------------------------+--------------------------------------------|
+  | Objective                        | (ref $3)                                   |
+
+
+* History
+
+** <2019-11-04 lun.>
+
+  #+objective: (ref req::4c02::connect_server_prometheus)
+  #+time_interval: 09:00-11:30
+  #+begin_src org
+
+  #+end_src

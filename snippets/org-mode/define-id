@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: define-id
+# key: defi
+# --
+[[def:`(downcase (org-id-new))`][${1:def}]]

@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: log-string
+# key: logs
+# --
+dbg and print(f"${1:name}\n")

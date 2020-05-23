@@ -1,0 +1,4 @@
+# key: |ins
+# name: instruction
+# --
+| phf        | ${1:uid} |      | ($2)                |                  |

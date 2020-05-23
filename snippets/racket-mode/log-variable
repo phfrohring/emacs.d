@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log-variable
+# key: logv
+# --
+(displayln (format "${1:name}: ~a" $1))

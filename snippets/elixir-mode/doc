@@ -1,0 +1,24 @@
+# key: doc
+# name: doc
+# --
+@doc """
+${1:short description}
+
+
+## Details
+
+   □
+   ----- ${2:name}
+   □
+
+   where:
+
+     □ : □
+
+
+## Example
+
+    iex> $2(□)
+    □
+
+"""

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: tmp
+# key: <t
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+    @echo "${1:name}:" $($1)

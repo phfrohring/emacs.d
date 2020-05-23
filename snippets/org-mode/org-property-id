@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: org-property-id
+# key: :id
+# --
+:id: (def uuid$0)

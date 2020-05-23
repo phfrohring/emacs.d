@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: trace
+# key: tr
+# --
+variable "${1:variable_name}"

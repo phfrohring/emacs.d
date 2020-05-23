@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+
+exit_1() { eval "$__exit_1"; }
+
+err() {
+    local script_path="${BASH_SOURCE[${#BASH_SOURCE[@]}-1]}"
+    err_msg="error\n  date: $(date +'%Y-%m-%dT%H:%M:%S%z')\n  script_path: $script_path\n  "
+    for key_val in "$@"; do
+        err_msg="${err_msg}${key_val}\n  "
+    done
+
+    echo -e "$err_msg"
+}
+
+on_error() {
+
+    : 'Prints an error when an error is detected and exits the script.'
+
+    read -r line file <<<"$(caller)"
+    culprit=$(sed "${line}q;d" "$file")
+    err "line: $line" "command: $culprit"
+    exit_1
+}
+
+on_exit() {
+    : 'Clean up things'
+}
+
+setup() {
+    set -ou pipefail >/dev/null
+    readonly __top_pid="$$"
+    readonly __exit_1="kill -s TERM ${__top_pid}"
+    trap 'on_error' ERR
+    trap 'excode=$?; trap "" EXIT; on_exit; exit $excode' EXIT
+}
+
+setup
+this_file="$(readlink -f ${BASH_SOURCE[0]})"
+this_dir="$(dirname $this_file)"
+
+# Build Emacs.
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt update
+sudo apt install emacs26
+
+# Build Emacs dependencies.
+curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+sudo ln -s ~/.cask/bin/cask /usr/local/bin/cask
+git clone https://github.com/phfrohring/emacs.d.git ~/.emacs.d
+cd ~/.emacs.d
+cask install
+emacs --batch -l org init.org -f org-babel-tangle
+
+
+# System boot ⇒ Start Emacs server.
+emacs_service=$(cat <<EOF
+[Unit]
+Description=Emacs text editor
+Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+
+[Service]
+Type=forking
+ExecStart=$HOME/bin/emacs/bin/start
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+Environment=LANG=en_US.UTF-8
+Environment=LANGUAGE=en_US.UTF-8
+Environment=LC_MEASUREMENT=en_US.UTF-8
+Environment=LC_PAPER=en_US.UTF-8
+Environment=LC_MONETARY=en_US.UTF-8
+Environment=LC_NAME=en_US.UTF-8
+Environment=LC_ADDRESS=en_US.UTF-8
+Environment=LC_NUMERIC=en_US.UTF-8
+Environment=LC_TELEPHONE=en_US.UTF-8
+Environment=LC_IDENTIFICATION=en_US.UTF-8
+Environment=LC_TIME=en_US.UTF-8
+Environment=LC_ALL=en_US.UTF-8
+Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+EOF
+)
+echo "$emacs_service" > ~/.config/systemd/user/emacs.service
+systemctl --user daemon-reload
+systemctl enable --user emacs # boot ⇒ start Emacs
+systemctl start --user emacs
+systemctl status --user emacs
+
+
+# init.org updated => push to remote git dir
+#   1. create a new key pair
+#   2. add it to Github or wherever
+#   3. ssh-add it once
+#   4. systemctl restart --user emacs
+#   => Q.E.D.
+if ! hash keychain; then
+    sudo apt install keychain
+fi
+
+keychain_bash_profile=$(cat <<'EOF'
+type keychain >&/dev/null && keychain --agents ssh
+EOF
+)
+echo "$keychain_bash_profile" >> ~/.bash_profile
+
+keychain_bashrc=$(cat <<'EOF'
+[[ -f "$HOME/.keychain/$HOSTNAME-sh" ]] && source "$HOME/.keychain/$HOSTNAME-sh"
+EOF
+)
+echo "$keychain_bashrc" >> ~/.bashrc
+
+
+# Emacs as default editor.
+emacs_default_editor=$(cat <<'EOF'
+  export ALTERNATE_EDITOR=""
+  export EDITOR="emacsclient -t"                  # $EDITOR opens in terminal
+  export VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI mode
+  EOF
+)
+echo "$emacs_default_editor" >> ~/.bashrc
+echo "alias ec='emacsclient -a \"\" -c'" >> ~/.bash_aliases
+
+
+# Open a new window.
+ec

@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# name: module-structure-comment
+# key: ms
+# --
+'use strict';
+
+// Sketch
+// `(make-string 97 ?\-)`
+// $0
+
+
+
+// Requires
+// `(make-string 97 ?\-)`
+
+const path = require('path');
+const { capitalize } = require('./tools');
+const cwd = __dirname;
+const cwdName = capitalize(path.basename(cwd));
+
+
+
+// Implements
+// `(make-string 97 ?\-)`
+
+
+
+// Provides
+// `(make-string 97 ?\-)`
+
+module.exports = {
+    [\`is\${cwdName}\`]: () => {},
+    [\`bd\${cwdName}\`]: () => {},
+    [\`eq\${cwdName}\`]: () => {},
+    [\`dc\${cwdName}\`]: () => {}
+};

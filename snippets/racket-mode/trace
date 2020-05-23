@@ -1,0 +1,4 @@
+# key: tr
+# name: trace
+# --
+(tr debug ${1:symbol})

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: log-string
+# key: logs
+# --
+console.log('log::`(downcase (nth 1 (split-string (org-id-new) "-")))` ${1:string}')

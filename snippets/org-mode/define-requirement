@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: define-requirement
+# key: defr
+# --
+(def ${1:req})

@@ -1,0 +1,4 @@
+# key: obj
+# name: objective
+# --
+obj::`(downcase (nth 1 (split-string (org-id-new) "-")))`::${1:name}

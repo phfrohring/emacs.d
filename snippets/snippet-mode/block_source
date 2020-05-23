@@ -1,0 +1,8 @@
+# key: bsrc
+# name: block_source
+# expand-env: ((yas-indent-line (quote fixed)) (yas-wrap-around-region (quote nil)))
+# key: bsrc
+# --
+#+begin_src ${1:lang}
+$0
+#+end_src

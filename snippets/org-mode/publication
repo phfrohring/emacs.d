@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: publication
+# key: pub
+# --
+* ${1:title}
+  :properties:
+  :sub_title: A sub-title
+  :image_hash: An image hash
+  :abstract: Abstract
+  :type: 8b1d6ee2-e506-4b95-a6df-a0a1a6356dbb
+  :author: Pierre-Henry Fröhring
+  :public: true
+  :id: `(downcase (org-id-new))`
+  :last_updated: ${3:date}
+  :end:
+
+${2:content}

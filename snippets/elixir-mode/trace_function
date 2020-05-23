@@ -1,0 +1,4 @@
+# key: trf
+# name: trace_function
+# --
+Debug.print_function_name(__ENV__)

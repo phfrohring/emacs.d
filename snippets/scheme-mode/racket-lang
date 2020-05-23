@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: racket-lang
+# key: lang
+# --
+#lang $0

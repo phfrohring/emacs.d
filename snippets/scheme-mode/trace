@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: trace
+# key: tr
+# --
+(write (format "${1:var_name}: ~a" $1))

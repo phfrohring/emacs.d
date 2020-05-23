@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: verbatim
+# key: ver
+# --
+\begin{Verbatim}[fontsize=\footnotesize]
+$0
+\end{Verbatim}

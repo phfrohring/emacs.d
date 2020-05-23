@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: latex-link
+# key: lnk
+# --
+\newcommand{$1}{\href{$2}{$3}}$0

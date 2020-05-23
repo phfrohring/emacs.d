@@ -1,0 +1,8 @@
+# key: <js
+# name: block-js
+# --
+#+name: ${1:name}
+#+source: ${2:source}
+#+begin_src js
+  $0
+#+end_src

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: quotation
+# key: quotation
+# --
+\begin{requotation}{$1}{`(downcase (nth 1 (split-string (org-id-new) "-")))`}
+$0
+\end{requotation}

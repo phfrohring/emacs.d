@@ -1,0 +1,667 @@
+#+STARTUP: inlineimages
+#+STARTUP: showeverything
+
+* This org file configuration
+
+** Execute code blocks right away
+
+Do not ask for evaluation of code blocks.
+#+begin_src elisp :results silent
+  (defun my-org-confirm-babel-evaluate (lang body)
+    ;; don't ask for …
+    (not (or
+           (string= lang "python")
+           (string= lang "elisp"))))
+  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+#+end_src
+
+** Executing Python code blocks
+
+Python code runs in a common session.
+
+In session mode, the python code is evaluated directly by the interpreter, not in a
+function context, and the last statement's value will be automatically returned, so
+you must not use a return statement.
+
+See: [[https://orgmode.org/org.html#Environment-of-a-Code-Block][Session]]
+
+#+PROPERTY: header-args:python :session *Python*
+#+PROPERTY:                    :results silent
+
+** Displaying inline images
+
+Display images inline when a code block is executed.
+#+begin_src elisp :results silent
+  (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
+#+end_src
+
+
+* Configure the Python process
+
+** Setting up Python environment
+
+Activate python environment.
+#+begin_src elisp :results silent
+  (pyvenv-activate (f-join (f-dirname (buffer-file-name)) "venv"))
+#+end_src
+
+** Root the Python process in the source directory
+
+#+begin_src python :session :results output
+import os
+os.chdir("/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/src")
+import configure_syspath
+from src.parse import parse_message
+print(parse_message("(:kind :prop-1 value_1 :prop-2 value-2)"))
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+:   File "/tmp/babel-9GJCS5/python-D27BEu", line 4, in <module>
+:     from src.parse import parse_message
+:   File "/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/src/parse.py", line 33
+:     kind, *plist = result
+:           ^
+: SyntaxError: invalid syntax
+
+
+** Python imports
+
+#+begin_src python :session :results
+  from importlib import reload
+
+  import src.data
+  reload(src.data)
+  from src.data import data_load_db, data_split
+
+  import src.model_doubling
+  reload(src.model_doubling)
+  from src.model_doubling import model as model_doubling
+
+  from os import path
+
+  import sklearn
+
+  from datetime import datetime, timedelta, timezone
+#+end_src
+
+#+RESULTS:
+
+* Expected gains
+:properties:
+:id: [[def:d28827ce-8196-47a8-b1d2-9d1c51aff32f][expected_gains]]
+:end:
+
+Assume that we have ~m~ that can predict successes or errors of the user on a given
+test i.e. ~(m user_id test_id a_day) = success | failure~, then we can compute for
+each day the tests to be taken or to be postponed so that, after the tests are done
+with success then, we have reasons to think that all tests would be a success, should
+they all be taken.
+
+In other words, we only prescribe tests that the user will likely fail to do and
+ignore the others ⇒ users never take more tests than what they should.
+
+i.e.
+#+begin_example
+  (define users { user_id_1 … })
+  (define tests { test_id_1 … })
+  (define user_id (choose_one (∈ users)))
+  (define tests_today (choose_all (∈ tests) (m user_id □ today)))
+  (user_do tests_today)
+  (= (choose_all (∈ tests) (m user_id □ today)) {})
+#+end_example
+
+* Strategy
+
+  1. [[ref:60849018-4765-4bef-8d73-850d579020b8][data]]
+  3. [[ref:43d65f58-13c7-48ef-abf0-fc057587755e][error measure]]
+  4. [[ref:4de49e65-531c-4e1d-a1ec-a545eb4384c0][models]]
+  5. [[ref:71c23f4f-40e7-41d6-b1f4-254ba07e0819][benchmark]]
+
+
+
+* Data
+:properties:
+:id: [[def:60849018-4765-4bef-8d73-850d579020b8][data]]
+:end:
+
+** Time representation
+:properties:
+:def:  [[def:(def 64dcf5d5-4691-4e25-80fa-e37730318a81)][time representation]]
+:end:
+
+
+Time is represented as UTC.
+why:
+#+begin_example
+  The rules for time adjustment across the world are more political than rational,
+  change frequently, and there is no standard suitable for every application aside
+  from UTC.
+#+end_example
+source: https://docs.python.org/3.7/library/datetime.html#id3
+
+** Data point
+:properties:
+:def: [[def:(def f09bde29-2b99-4617-b0a4-218436834049)][data point]]
+:end:
+
+
+#+begin_src python :session :results output
+  example_db_path = path.join(os.getcwd(), "schedule", "example.db.sqlite3")
+  example_data = data_load_db(example_db_path)
+  print(example_data.head())
+#+end_src
+
+#+RESULTS[b550b99acf273dbd7fbb7b4994f744e67acc932e]:
+: ex_id  result
+: date
+: 2020-04-12 22:23:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+: 2020-04-12 22:23:36+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       0
+: 2020-04-13 18:42:02+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       0
+: 2020-04-13 18:42:05+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+: 2020-04-25 23:57:24+02:00  ef4d47c5-918b-44e6-90d9-ba13d1b49b11       1
+
+Each record has: a [[ref:64dcf5d5-4691-4e25-80fa-e37730318a81][date]], an id and a result. A result is 1 for a success and 0 for an
+error.
+
+
+** Data source
+:properties:
+:id: [[def:b87ffcd7-370a-4b3b-ad73-d2e0694633cf][data_source]]
+:end:
+
+Data is recorded continuously while building the system. We load data from these
+recordings.
+
+#+begin_src python :session :results output
+  db_path = path.join("/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/database/db.sqlite3")
+  print(data_load_db(db_path).head())
+#+end_src
+
+#+RESULTS:
+: ex_id  result
+: date
+: 2020-04-12 22:23:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+: 2020-04-12 22:23:36+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       0
+: 2020-04-13 18:42:02+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       0
+: 2020-04-13 18:42:05+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+: 2020-04-14 02:00:50+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+
+
+
+* Error measure
+:properties:
+:id: [[def:43d65f58-13c7-48ef-abf0-fc057587755e][error measure]]
+:end:
+
+We base our error measure on the [[data:f50602a5ff24640c8112edb5a1fdb47f.pdf][M5 competition]] error measure.
+
+[[data:b86b2d78457b62195faa87e2071beb3c.pdf][Another look at measures of forecast accuracy]]
+
+For now we use MSE:
+
+#+begin_example
+(define (mse data predictions) (~> - (map sqrt) sum (/ (count data))))
+#+end_example
+
+error measure
+
+#+begin_src python :session :results output
+error_measure = sklearn.metrics.mean_squared_error
+measures = [1,1,0,0,1,0,1]
+predictions = [1,1,1,1,1,1,1]
+print(f"error_measure: {error_measure(measures, predictions)}")
+#+end_src
+
+#+RESULTS:
+: error_measure: 0.42857142857142855
+
+
+* Models
+:properties:
+:id: [[def:4de49e65-531c-4e1d-a1ec-a545eb4384c0][models]]
+:end:
+
+Among all the factors that can be taken into account by the model to make a
+prediction, we only use these for now: the user, the exercise id and the time.
+
+So the model has this signature: ~model : user_id exercise_id date → 0 | 1~
+~1~ means that the exercise should be reviewed at this date because it's probably going to fail.
+~0~ means that the exercise should not be reviewed at this date because it's probably going to succeed anyway.
+
+
+** Random
+
+This model helps us set a reference point to compare other models errors compared to
+this one?
+
+#+begin_src python :session :results output
+  # str str date → bool
+  def m_random(user_id, exercise_id, date):
+      return np.random.randint(2)
+
+  print(m_random(1,1,1))
+#+end_src
+
+#+RESULTS:
+: 1
+
+** Doubling
+
+*** Specification
+
+
+| history                                              | cutoff date  |
+|------------------------------------------------------+--------------|
+| []                                                   | now          |
+| [(date_1, 1)]                                        | (+ date_1 1) |
+| [(date_1, 1), (date_2, 1)]                           | (+ date_2 2) |
+| [(date_1, 1), (date_2, 1), (date_3, 1)]              | (+ date_3 4) |
+| [(date_1, 1), (date_2, 1), (date_3, 1), (date_4, 0)] | date_4       |
+
+So, given the data, the objective is to build a table:
+
+| exercise-id | cutoff date |
+|-------------+-------------|
+| …           | …           |
+
+Then:
+  exercise-id date:
+    date < cutoff date → 0
+    date ≥ cutoff date → 1
+
+
+*** Implementation
+
+#+begin_src python :session :results output
+  model_doubling
+#+end_src
+
+*** Test
+
+#+begin_src python :session :results output
+  data = data_load_db('/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/database/db.sqlite3')
+  data_slice = data.loc[data.index[0:10]]
+  print(f"data_slice:\n{data_slice}\n")
+
+  build_m_doubling_cutoffdates(data_slice, dbg = True)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+data_slice:
+                                                          ex_id  result
+date
+2020-04-12 22:23:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-12 22:23:36+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       0
+2020-04-13 18:42:02+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       0
+2020-04-13 18:42:05+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:00:50+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:00:56+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:02:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:02:32+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:04:13+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:04:15+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+
+executing: build_m_doubling_cutoffdates
+
+list_of_ex_id = <StringArray>
+['622a70ce-98a3-412b-8f96-ebb63da76769', 'e22553da-2eb8-49e6-90f9-bad0e3f56fdf']
+Length: 2, dtype: string
+
+ex_id = 622a70ce-98a3-412b-8f96-ebb63da76769
+
+df_ex_id =                                                           ex_id  result
+date
+2020-04-12 22:23:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-13 18:42:02+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       0
+2020-04-14 02:00:50+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:02:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:04:13+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+
+df_ex_id_0 =                                                           ex_id  result
+date
+2020-04-13 18:42:02+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       0
+
+date_of_last_zero = 2020-04-13 18:42:02+02:00
+
+nbr_of_ones = 3
+
+date_of_last_one = 2020-04-14 02:04:13+02:00
+
+cutoff_date = 2020-04-22 02:04:13+02:00
+
+ex_id = e22553da-2eb8-49e6-90f9-bad0e3f56fdf
+
+df_ex_id =                                                           ex_id  result
+date
+2020-04-12 22:23:36+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       0
+2020-04-13 18:42:05+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:00:56+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:02:32+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:04:15+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+
+df_ex_id_0 =                                                           ex_id  result
+date
+2020-04-12 22:23:36+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       0
+
+date_of_last_zero = 2020-04-12 22:23:36+02:00
+
+nbr_of_ones = 4
+
+date_of_last_one = 2020-04-14 02:04:15+02:00
+
+cutoff_date = 2020-04-30 02:04:15+02:00
+#+end_example
+
+
+* Benchmark
+:properties:
+:id: [[def:71c23f4f-40e7-41d6-b1f4-254ba07e0819][benchmark]]
+:end:
+
+** Specification
+
+We have [[ref:60849018-4765-4bef-8d73-850d579020b8][data]] which holds a test result for each exercise at various times.  The
+objective of the benchmark is to compare models at predicting results at time t
+provided all results until t-1.
+
+** Training set and test set
+
+#+begin_src python :session :results output
+  data_instance = data_load_db('/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/database/db.sqlite3')
+  data_instance_slice = data_instance.loc[data_instance.index[0:10]]
+  data_split(data_instance_slice, dbg = True)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+data =                                                           ex_id  result
+date
+2020-04-12 22:23:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-12 22:23:36+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       0
+2020-04-13 18:42:02+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       0
+2020-04-13 18:42:05+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:00:50+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:00:56+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:02:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:02:32+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+2020-04-14 02:04:13+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:04:15+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+
+dataset_test =                                                           ex_id  result
+date
+2020-04-14 02:04:13+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+2020-04-14 02:04:15+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/tmp/babel-9GJCS5/python-68C7Mo", line 3, in <module>
+    data_split(data_instance_slice, dbg = True)
+  File "/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/src/data.py", line 18, in data_split
+
+  File "/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/src/data.py", line 91, in _build_training_and_test_sets
+
+NameError: name 'data_instance_slice' is not defined
+#+end_example
+
+#+begin_src python :session :results output
+  from os import path
+  from src.data import data_load_db
+  import pandas as pd
+
+
+  dbg = True
+
+
+  # Build: data
+  data_instance = data('/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/database/db.sqlite3')
+
+  (dataset_training, dataset_test) = build_training_and_test_sets(data_instance)
+
+  dbg and print(f"dataset_test = {dataset_test}\n")
+  dbg and print(f"dataset_training = {dataset_training}\n")
+
+  # Build: list_of_model
+  list_of_model = [
+      ('m_random', m_random),
+      ('m_doubling', build_m_doubling(dataset_training))
+  ]
+
+
+  # Build: targeted
+  test_rows_iterator = dataset_test.iterrows()
+  targeted = []
+  for index, row in dataset_test.iterrows():
+      targeted.append(row['result'])
+
+  dbg and print(f"targeted = {targeted}\n")
+
+
+  # Build: list_of_result
+  list_of_result = []
+  for model in list_of_model:
+      (name, proc) = model
+      dbg and print(f"name = {name}\n")
+      predicted = []
+      for index, row in dataset_test.iterrows():
+          predicted.append(proc(None, row['ex_id'], index))
+
+      # Because: proc(…) == 1 meanse review and 0 do not review.
+      # review means that a test is expected to be failed.
+      predicted = [1 if x == 0 else 0 for x in predicted]
+      print(f"predicted = {predicted}\n")
+      print(f"targeted = {targeted}\n")
+      err = error_measure(targeted, predicted)
+      list_of_result.append((name, err))
+
+
+  # Build: report
+  report = ""
+  for result in list_of_result:
+      (name, err) = result
+      report += f"{name} error = {err}\n"
+
+
+  # Show: report
+  print(report)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/tmp/babel-9GJCS5/python-IqnVJI", line 12, in <module>
+    (dataset_training, dataset_test) = build_training_and_test_sets(data_instance)
+  File "/tmp/babel-9GJCS5/python-4E9HcJ", line 16, in build_training_and_test_sets
+    dataset_training = data_instance_slice.drop(index = dataset_test.index)
+  File "/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/venv/lib/python3.7/site-packages/pandas/core/frame.py", line 3997, in drop
+    errors=errors,
+  File "/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/venv/lib/python3.7/site-packages/pandas/core/generic.py", line 3936, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+  File "/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/venv/lib/python3.7/site-packages/pandas/core/generic.py", line 3970, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/phf/knowledge/content/data/f6c1e79e-99c0-460f-bebc-ec5e14746d94/totalrecall/scheduler/venv/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 5017, in drop
+    raise KeyError(f"{labels[mask]} not found in axis")
+KeyError: "[Timestamp('2020-04-27 18:55:30+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-27 18:56:10+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-27 18:58:51+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-27 19:02:23+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-27 19:22:58+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-27 19:23:00+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:12:18+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:17:55+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:22:48+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:27:07+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:29:39+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:30:01+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:30:03+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:33:35+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:38:20+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:38:43+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:38:49+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 20:38:56+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 22:09:30+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 22:10:05+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 22:10:07+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 22:10:08+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-04-30 22:11:06+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:49:37+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:56:15+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:56:32+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:56:42+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:56:51+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:57:55+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:58:39+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-03 23:59:50+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:02:29+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:03:29+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:03:42+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:05:00+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:06:48+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:08:03+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:08:08+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:08:19+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:08:27+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:08:56+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:09:42+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:10:06+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:11:02+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:11:23+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:12:51+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:13:37+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:14:25+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:16:37+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:16:51+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:17:24+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:19:32+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:21:06+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:21:27+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:22:04+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:22:32+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:22:49+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:23:56+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:24:34+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:24:53+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:25:40+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:26:53+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:26:58+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:27:12+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:27:21+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:27:31+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:27:56+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:28:54+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:29:45+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:30:35+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:30:43+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:31:25+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:31:32+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:31:40+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:31:56+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:32:21+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:32:34+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:34:22+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 00:34:50+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:32:15+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:45:49+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:46:11+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:46:41+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:46:58+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:47:31+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:49:51+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:50:12+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 10:50:54+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 11:39:50+0200', tz='pytz.FixedOffset(120)')\n Timestamp('2020-05-04 11:42:10+0200', tz='pytz.FixedOffset(120)')] not found in axis"
+#+end_example
+
+
+* Other
+** Problem
+
+
+
+~u_id~ represents a user id.
+~o_id~ represents an object id.
+~t~ represents a date.
+~s : u_id o_id t → O | 1~ represents the real scheduler.
+~(s u_id o_id t) = 0~ means that ~u_id~ will fail to evaluate the object ~o_id~ at time ~t~.
+~(s u_id o_id t) = 1~ means that ~u_id~ will succeed to evaluate the object ~o_id~ at time ~t~.
+~data~ is the set of data points known of ~s~.
+~data = { (s u_id o_id t)_1 … }~ is a set of values of ~s~.
+
+The problem is to build ~m : u_id o_id t → 0 | 1~ so that ~(m u_id o_id t) = (s u_id o_id t)~.
+
+Since there is not hope to ever find ~s~ exactly, we try to approximate it with
+models: ~m_1, m_2 …~.
+
+Among all the models, we rank them by prediction power.
+
+
+
+
+
+#+begin_src python :session :results output
+  import numpy as np
+  from sklearn.model_selection import train_test_split
+  from sklearn import datasets
+  from sklearn import svm
+
+  X, y = datasets.load_iris(return_X_y=True)
+  print(f"5479 X.shape = {X.shape}")
+  print(f"10ab y.shape = {y.shape}")
+#+end_src
+
+#+RESULTS:
+: 5479 X.shape = (150, 4)
+: 10ab y.shape = (150,)
+
+#+begin_src python :session :results output
+  from sklearn.model_selection import cross_val_score
+  clf = svm.SVC(kernel='linear', C=1)
+
+  # Return
+  scores = cross_val_score(clf, X, y, cv=5)
+  print(f"3c39 scores = {scores}")
+  print("The mean score and the 95% confidence interval of the score estimate are hence given by:")
+  print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+#+end_src
+
+#+RESULTS:
+: 3c39 scores = [0.96666667 1.         0.96666667 0.96666667 1.        ]
+: The mean score and the 95% confidence interval of the score estimate are hence given by:
+: Accuracy: 0.98 (+/- 0.03)
+
+** Scheduling Algorithm
+
+#+begin_example
+  Assume:
+    successes := 0
+    ex-id := an exercise id
+    data := historical data
+
+  Algorithm:
+
+    # ~successes~ is the number of consecutive successes starting from the last data point.
+    # Example: for a given exercise, if the sequence of successes is: 10010111011111
+    # then (= (count_successes data ex-id now) 5)
+    #
+    # Example: for a given exercise, if the sequence of successes is: 100101110111110
+    # then (= (count_successes data ex-id now) 0)
+    (define successes (count_successes data ex-id))
+
+    # ~last_success-date~ represents the date of the last success if it exists, else: None.
+    (define last_success-date (find-last_success-date data ex-id))
+
+    # ~next-review-date~ represents the next date after which an exercise should be reviewed.
+    # a simple function is used:
+    #   (define next-review-date (+ last_success-date (* (* successes successes) 1day)))
+    #
+    # Example:
+    #   (define last_success-date today)
+    #   (define successes 1)
+    #   --------------------------------
+    #   (define next-review-date (+ today 1day))
+    #
+    #   (define last_success-date today)
+    #   (define successes 2)
+    #   --------------------------------
+    #   (define next-review-date (+ today 4day))
+    (define next-review-date (find-next-review-date last_success-date successes))
+
+    # ~decision~ represents if yes or no an exercise should be reviewed compared to a given ~date~.
+    (define decision (choose next-review-date date))
+#+end_example
+
+** Algorithm
+
+Let's reload the module.
+#+begin_src python :session :results silent
+import src.schedule.schedule
+reload(src.schedule.schedule)
+#+end_src
+
+
+Assuming this data:
+#+begin_src python :session :results output
+data = data_load_db(example_db_path)
+print(data)
+#+end_src
+
+#+RESULTS:
+: date                                 ex_id  result
+: 0 2020-04-26 00:44:42+02:00  4e99a87d-9b30-42ea-bd28-11a22e60b682       1
+: 1 2020-04-25 23:57:24+02:00  ef4d47c5-918b-44e6-90d9-ba13d1b49b11       1
+: 2 2020-04-13 18:42:05+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       1
+: 3 2020-04-13 18:42:02+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       0
+: 4 2020-04-12 22:23:36+02:00  e22553da-2eb8-49e6-90f9-bad0e3f56fdf       0
+: 5 2020-04-12 22:23:29+02:00  622a70ce-98a3-412b-8f96-ebb63da76769       1
+
+
+We get:
+
+#+begin_src python :session :results output
+from src.schedule.schedule import _count_successes
+exercise_id = "622a70ce-98a3-412b-8f96-ebb63da76769"
+successes = _count_successes(data_cleaned, exercise_id)
+print(successes)
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+:   File "/tmp/babel-9GJCS5/python-N0cVc7", line 3, in <module>
+:     successes = _count_successes(data_cleaned, exercise_id)
+: NameError: name 'data_cleaned' is not defined
+
+#+begin_src python :session :results output
+from src.schedule.schedule import _find_last_success_date
+last_success_date = _find_last_success_date(data_cleaned, exercise_id)
+print(last_success_date)
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+:   File "/tmp/babel-9GJCS5/python-KLT7al", line 2, in <module>
+:     last_success_date = _find_last_success_date(data_cleaned, exercise_id)
+: NameError: name 'data_cleaned' is not defined
+
+#+begin_src python :session :results output
+from src.schedule.schedule import _find_next_review_date
+next_review_date = _find_next_review_date(last_success_date, successes)
+print(next_review_date)
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+:   File "/tmp/babel-9GJCS5/python-tDJBnA", line 2, in <module>
+:     next_review_date = _find_next_review_date(last_success_date, successes)
+: NameError: name 'last_success_date' is not defined
+
+#+begin_src python :session :results output
+from dateutil.parser import isoparse
+from src.schedule.schedule import _choose
+decision = _choose(next_review_date, isoparse("2020-04-14T01:32:23+02:00"))
+print(decision)
+#+end_src
+
+#+RESULTS:
+: Traceback (most recent call last):
+:   File "<stdin>", line 1, in <module>
+:   File "/tmp/babel-9GJCS5/python-w9KVnT", line 3, in <module>
+:     decision = _choose(next_review_date, isoparse("2020-04-14T01:32:23+02:00"))
+: NameError: name 'next_review_date' is not defined
