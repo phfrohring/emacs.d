@@ -1,6 +1,6 @@
 * Emacs setup
 
-[[file:][emacs-setup]]
+[[file:install][install]]
 
 
 * init.el
