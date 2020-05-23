@@ -11,7 +11,6 @@
   ;; <<pallet>>
   <<setq>>
   <<defun>>
-
   <<utf8>>
   <<after-save-hook>>
   <<global-set-key>>
