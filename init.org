@@ -7,10 +7,11 @@
 
 #+begin_src elisp :tangle "./init.el" :noweb yes
   ;; -*- lexical-binding: t -*-
-  <<cask>>
+  ;; <<cask>>
+  ;; <<pallet>>
   <<setq>>
   <<defun>>
-  <<pallet>>
+
   <<utf8>>
   <<after-save-hook>>
   <<global-set-key>>
