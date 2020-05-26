@@ -560,6 +560,7 @@ Install dependencies:
            (string= lang "dot")
            (string= lang "org")
            (string= lang "python")
+           (string= lang "latex")
            (string= lang "elisp")
            (string= lang "ditaa")
            (string= lang "emacs-lisp"))))
