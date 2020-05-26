@@ -532,6 +532,7 @@ Install dependencies:
        (org . t)
        (shell . t)
        (python . t)
+       (latex . t)
        (dot . t)
        (scheme . t)
        ;; (racket . t)
