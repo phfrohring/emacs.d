@@ -1,0 +1,17 @@
+# key: <lm
+# name: latex-math
+# expand-env: ((yas-indent-line (quote fixed)) (yas-wrap-around-region (quote nil)))
+# --
+#+begin_src latex :file /tmp/`(downcase (nth 1 (split-string (org-id-new) "-")))`.png
+  \begin{Large}
+      \begin{equation*}
+          \addtolength{\fboxsep}{5pt}
+          \boxed{
+            \begin{split}
+                &\text{--- assume ---}\\
+                &\text{--- conclude ---}\\
+            \end{split}
+          }
+      \end{equation*}
+  \end{Large}
+#+end_src

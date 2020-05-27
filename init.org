@@ -11,9 +11,9 @@
   <<defun>>
   <<utf8>>
   <<after-save-hook>>
-  <<global-set-key>>
+  ;;<<global-set-key>>
   <<font>>
-  <<theme>>
+  ;;<<theme>>
   ;; <<openwith>>
   <<org-mode>>
   <<lisp-mode>>
@@ -35,7 +35,7 @@
   <<recentf>>
   <<ivy>>
   <<web-mode>>
-  <<counsel>>
+  ;;<<counsel>>
   <<racket>>
   <<magit>>
   <<easypg>>
@@ -53,8 +53,8 @@
   ;; <<outline-minor-mode>>
   <<dockerfile-mode>>
   ;; <<latex>>
-  ;; <<cask>>
-  ;; <<pallet>>
+  <<cask>>
+  <<pallet>>
 #+end_src
 
 
@@ -761,7 +761,7 @@ Install dependencies:
   (global-set-key (kbd "C-b") 'backward-char)
 
   ;; js2-refactor prefix
-  (js2r-add-keybindings-with-prefix "C-c RET")
+  ;;(js2r-add-keybindings-with-prefix "C-c RET")
 
   ;; C-t → insert indentation at point
   (global-set-key (kbd "C-t") (lambda () (interactive) (insert "    ")))
@@ -782,7 +782,7 @@ Install dependencies:
 
   ;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
   ;; unbind it.
-  (define-key js-mode-map (kbd "M-.") nil)
+  ;;(define-key js-mode-map (kbd "M-.") nil)
 #+end_src
 
 
