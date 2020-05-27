@@ -13,9 +13,9 @@
   <<defun>>
   <<utf8>>
   <<after-save-hook>>
-  ;;<<global-set-key>>
+  <<global-set-key>>
   <<font>>
-  ;;<<theme>>
+  <<theme>>
   ;; <<openwith>>
   <<org-mode>>
   <<lisp-mode>>
@@ -37,7 +37,7 @@
   <<recentf>>
   <<ivy>>
   <<web-mode>>
-  ;;<<counsel>>
+  <<counsel>>
   <<racket>>
   <<magit>>
   <<easypg>>
@@ -111,10 +111,6 @@ Install dependencies:
 
 #+name: pallet
 #+begin_src elisp
-    (user-message
-      '("Any time you install a package with M-x package-list-packages and similar, pallet"
-        "will write it down in your Cask file and the files fill go under the .cask/"
-        "directory."))
     (require 'pallet)
     (pallet-mode t)
 #+end_src
@@ -124,8 +120,6 @@ Install dependencies:
 
 #+name: magit
 #+begin_src elisp
-    (user-message
-      '("Else, <tab> would not work with Magit."))
     (require 'magit)
     (define-key magit-mode-map (kbd "<tab>") 'magit-section-toggle)
 #+end_src
@@ -495,8 +489,7 @@ Install dependencies:
 
   (setq org-export-backends '(ascii beamer html icalendar latex org md))
 
-  (user-message
-    '("Collect items to be displayed in an agenda view from files listed in `org-agenda-files'"))
+
   (setq org-agenda-files '())
   (when (file-exists-p user-file-tasks) (add-to-list 'org-agenda-files user-file-tasks))
   (when (file-exists-p user-file-notes) (add-to-list 'org-agenda-files user-file-notes))
@@ -999,7 +992,6 @@ Install dependencies:
 
 #+name: utf8
 #+begin_src elisp
-  (user-message '("Just make everything utf8."))
 
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8)
