@@ -7,6 +7,8 @@
 
 #+begin_src elisp :tangle "./init.el" :noweb yes
   ;; -*- lexical-binding: t -*-
+  <<cask>>
+  <<pallet>>
   <<setq>>
   <<defun>>
   <<utf8>>
@@ -53,8 +55,6 @@
   ;; <<outline-minor-mode>>
   <<dockerfile-mode>>
   ;; <<latex>>
-  <<cask>>
-  <<pallet>>
 #+end_src
 
 
