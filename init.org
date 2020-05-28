@@ -631,6 +631,8 @@ Install dependencies:
   (setq org-image-actual-width nil)
 #+end_src
 
+#+RESULTS: org-mode
+
 
 
 * setq
