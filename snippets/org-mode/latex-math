@@ -8,8 +8,8 @@
           \addtolength{\fboxsep}{5pt}
           \boxed{
             \begin{split}
-                &\text{--- assume ---}\\
-                &\text{--- conclude ---}\\
+                &\text{--- assume ---}\\\\
+                &\text{--- conclude ---}\\\\
             \end{split}
           }
       \end{equation*}

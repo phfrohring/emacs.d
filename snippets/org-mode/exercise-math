@@ -1,0 +1,14 @@
+# key: ex-m
+# name: exercise-math
+# --
+#+name:   [[def:`(downcase (org-id-new))`]]
+#+begin_exercise
+${1:Object} interval:
+
+Problem?
+Construction?
+Example?
+Proof?
+--------
+□
+#+end_exercise
