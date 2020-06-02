@@ -36,7 +36,7 @@
   <<yasnippet>>
   <<recentf>>
   <<web-mode>>
-  ;; <<ivy>>
+  <<ivy>>
   <<counsel>>
   <<racket>>
   <<magit>>
