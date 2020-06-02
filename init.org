@@ -35,9 +35,9 @@
   <<company-mode>>
   <<yasnippet>>
   <<recentf>>
-  <<ivy>>
   <<web-mode>>
-  <<counsel>>
+  ;; <<ivy>>
+  ;; <<counsel>>
   <<racket>>
   <<magit>>
   <<easypg>>
