@@ -221,6 +221,7 @@ Install dependencies:
 
 * Ivy
 
+
 #+name: ivy
 #+begin_src elisp
   (ivy-mode)
