@@ -231,7 +231,8 @@ Install dependencies:
   (setq ivy-re-builders-alist
         ;; allow input not in order
         '((t   . ivy--regex-ignore-order)))
-  (ivy-explorer-mode 1)
+  ;; Causes a bug: Error in post-command-hook (ivy--queue-exhibit): (arith-error)
+  ;; (ivy-explorer-mode 1)
 #+end_src
 
 
