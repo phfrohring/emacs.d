@@ -8,52 +8,52 @@
 #+begin_src elisp :tangle "./init.el" :noweb yes
   ;; -*- lexical-binding: t -*-
   <<cask>>
-  <<pallet>>
-  <<setq>>
-  <<defun>>
-  <<utf8>>
-  <<after-save-hook>>
-  <<global-set-key>>
-  <<font>>
-  <<theme>>
+  ;; <<pallet>>
+  ;; <<setq>>
+  ;; <<defun>>
+  ;; <<utf8>>
+  ;; <<after-save-hook>>
+  ;; <<global-set-key>>
+  ;; <<font>>
+  ;; <<theme>>
   ;; <<openwith>>
-  <<org-mode>>
-  <<lisp-mode>>
-  <<show-paren-mode>>
-  <<before-save>>
-  <<after-save>>
-  <<transient-mark-mode>>
-  <<pending-delete-mode>>
-  <<column-number-mode>>
-  <<tool-bar-mode>>
-  <<scroll-bar-mode>>
-  <<global-auto-revert-mode>>
-  <<electric-pair-mode>>
+  ;; <<org-mode>>
+  ;; <<lisp-mode>>
+  ;; <<show-paren-mode>>
+  ;; <<before-save>>
+  ;; <<after-save>>
+  ;; <<transient-mark-mode>>
+  ;; <<pending-delete-mode>>
+  ;; <<column-number-mode>>
+  ;; <<tool-bar-mode>>
+  ;; <<scroll-bar-mode>>
+  ;; <<global-auto-revert-mode>>
+  ;; <<electric-pair-mode>>
   ;; <<js2-mode>>
-  <<ispell>>
-  <<after-init-hook>>
-  <<company-mode>>
-  <<yasnippet>>
-  <<recentf>>
-  <<web-mode>>
-  <<ivy>>
-  <<counsel>>
-  <<racket>>
-  <<magit>>
-  <<easypg>>
-  <<auto-mode-alist>>
-  <<custom-set-faces>>
-  <<emacs-server>>
-  <<fix-dead-keys>>
-  <<total-recall>>
-  <<lispy-mode>>
-  <<emacs-lisp-mode>>
-  <<dired-mode>>
-  <<python-mode>>
-  <<sh-mode>>
-  <<keychain-environment>>
+  ;; <<ispell>>
+  ;; <<after-init-hook>>
+  ;; <<company-mode>>
+  ;; <<yasnippet>>
+  ;; <<recentf>>
+  ;; <<web-mode>>
+  ;; <<ivy>>
+  ;; <<counsel>>
+  ;; <<racket>>
+  ;; <<magit>>
+  ;; <<easypg>>
+  ;; <<auto-mode-alist>>
+  ;; <<custom-set-faces>>
+  ;; <<emacs-server>>
+  ;; <<fix-dead-keys>>
+  ;; <<total-recall>>
+  ;; <<lispy-mode>>
+  ;; <<emacs-lisp-mode>>
+  ;; <<dired-mode>>
+  ;; <<python-mode>>
+  ;; <<sh-mode>>
+  ;; <<keychain-environment>>
   ;; <<outline-minor-mode>>
-  <<dockerfile-mode>>
+  ;; <<dockerfile-mode>>
   ;; <<latex>>
 #+end_src
 
