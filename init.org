@@ -232,7 +232,7 @@ Install dependencies:
         ;; allow input not in order
         '((t   . ivy--regex-ignore-order)))
   ;; Causes a bug: Error in post-command-hook (ivy--queue-exhibit): (arith-error)
-  ;; (ivy-explorer-mode 1)
+  (ivy-explorer-mode 1)
 #+end_src
 
 
