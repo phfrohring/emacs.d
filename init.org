@@ -16,7 +16,7 @@
   <<global-set-key>>
   <<font>>
   <<theme>>
-  <<openwith>>
+  ;; <<openwith>>
   <<org-mode>>
   <<lisp-mode>>
   <<show-paren-mode>>
