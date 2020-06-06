@@ -34,7 +34,7 @@
   <<company-mode>>
   <<yasnippet>>
   <<recentf>>
-  <<web-mode>>
+  ;; <<web-mode>>
   <<ivy>>
   <<counsel>>
   <<racket>>
