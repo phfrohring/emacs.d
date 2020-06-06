@@ -51,7 +51,7 @@
   <<python-mode>>
   <<sh-mode>>
   <<keychain-environment>>
-  <<outline-minor-mode>>
+  ;; <<outline-minor-mode>>
   <<dockerfile-mode>>
   <<latex>>
 #+end_src
