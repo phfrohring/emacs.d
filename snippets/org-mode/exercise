@@ -1,10 +1,38 @@
 # -*- mode: snippet -*-
 # name: exercise
 # key: exercise
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
 # --
+#+source: $0
 #+name:   [[def:`(downcase (org-id-new))`]]
 #+begin_exercise
-□
+Why ${1:notion} ?
+Which properties must verify $1 ?
+How to build $1 ?
+How to use $1 ?
+Show that properties are verified?
 --------
-□
+Why $1:
+
+  □
+
+
+Which properties must verify $1 ?
+
+  □
+
+
+How to build $1 ?
+
+  □
+
+
+How to use $1 ?
+
+  □
+
+
+Show that properties are verified?
+
+  □
 #+end_exercise

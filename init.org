@@ -443,7 +443,7 @@ Install dependencies:
 
 
   (setq org-hide-leading-stars t)
-  (setq org-list-indent-offset 2)
+  (setq org-list-indent-offset 0)
   (setq org-modules '(org-bbdb org-bibtex org-docview org-gnus org-habit org-id org-info org-irc org-mhe org-rmail org-w3m))
 
 

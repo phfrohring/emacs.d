@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: tag-next
+# key: :n
+# --
+:next:

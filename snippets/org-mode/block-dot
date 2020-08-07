@@ -4,12 +4,12 @@
 # --
 #+begin_src dot :file data/`(downcase (nth 1 (split-string (org-id-new) "-")))`.png
   digraph {
-      graph [pad="0.5", nodesep="1"];
-      node [shape=circle,fixedsize=true,width=0.8];
+      graph [pad="0.25", nodesep="1"];
+      node [shape=box,fixedsize=true,width=0.8];
       edge [constraint=false,concentrate=true];
       overlap=false
       fontsize=12;
-      x [label="",width=0.3]
-      0 -> 1
+      x [label="a node"]
+      x -> 1
   }
 #+end_src

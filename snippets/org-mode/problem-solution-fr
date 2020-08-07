@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: problem-solution-fr
+# key: psfr
+# --
+|--------------+------------------------------|
+| property     | value                        |
+|--------------+------------------------------|
+| id           | `(downcase (nth 1 (split-string (org-id-new) "-")))`                         |
+| name         | ${1:name}                     |
+| status       | draft                        |
+| editor       | contact@phfrohring.com |
+| modification | change_process-               |
+| replace      |                              |
+|--------------+------------------------------|
+
+
+* Résumé
+
+
+* Problème
+
+
+* Conditions de résolution
+
+
+* Solution
+
+
+* Vérification

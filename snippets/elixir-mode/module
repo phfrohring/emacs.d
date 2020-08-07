@@ -1,7 +1,10 @@
-# key: doc
-# name: doc
+# key: m
+# name: module
 # expand-env: ((yas-indent-line (quote fixed)) (yas-wrap-around-region (quote nil)))
 # --
-@doc """
-$0
-"""
+defmodule ${1:module_name} do
+  @moduledoc """
+  $0
+  """
+
+end

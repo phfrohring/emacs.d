@@ -1,7 +1,11 @@
-# key: doc
-# name: doc
+# key: funcp
+# name: func-private
 # expand-env: ((yas-indent-line (quote fixed)) (yas-wrap-around-region (quote nil)))
 # --
 @doc """
-$0
+
 """
+@spec
+defp ${1:func_name}(${2:arg}) do
+  $0
+end
