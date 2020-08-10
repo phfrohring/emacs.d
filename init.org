@@ -494,6 +494,7 @@ Install dependencies:
   (setq org-agenda-files '())
   (when (file-exists-p user-file-tasks) (add-to-list 'org-agenda-files user-file-tasks))
   (when (file-exists-p user-file-notes) (add-to-list 'org-agenda-files user-file-notes))
+  (when (file-exists-p user-file-work-journal) (add-to-list 'org-agenda-files user-file-work-journal))
   (setq org-agenda-use-time-grid nil)
   (setq org-agenda-span 'month)
   (setq org-deadline-warning-days 0)
@@ -659,6 +660,7 @@ Install dependencies:
   (setq user-dir-local_bin "/usr/local/bin/")
   (setq user-file-tasks (concat user-dir-home (file-name-as-directory "gtd/tasks/content") "tasks.org"))
   (setq user-file-notes (concat user-dir-home (file-name-as-directory "knowledge/content") "notes.org"))
+  (setq user-file-work-journal (concat user-dir-home (file-name-as-directory "work/") "journal.org"))
 
   (setq initial-scratch-message "")
   (set-default 'fill-column 85)
