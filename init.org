@@ -415,7 +415,7 @@ Install dependencies:
     "Add highlight emphasis."
     (add-to-list 'org-font-lock-extra-keywords
                  '("\\<:next:\\>"
-                   (1 '(face highlight invisible nil)))))
+                   (0 '(face highlight invisible nil)))))
 
   (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
 
