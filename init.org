@@ -412,8 +412,6 @@ Install dependencies:
 #+name: org-mode
 #+begin_src elisp
 
-
-
     (defun user-custom-keywords ()
       (let ((user-custom-keywords
               '((":next:" . 'org-habit-clear-face)
