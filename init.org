@@ -419,7 +419,8 @@ Install dependencies:
             '((":next:" . 'org-habit-clear-face)
                (":wait:" . 'org-habit-alert-face)
                (":failed:" . 'org-habit-overdue-face)
-               (":success:" . 'org-habit-ready-face))))
+               (":success:" . 'org-habit-ready-face)
+)))
 
       (dolist (elt user-custom-keywords)
         (let ((regex (car elt))
