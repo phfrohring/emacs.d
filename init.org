@@ -420,7 +420,7 @@ Install dependencies:
     "Add highlight emphasis."
     (add-to-list 'org-font-lock-extra-keywords
       '("\\<:next:\\>"
-         (1 aj/org-headline-todo t))))
+         (1 'aj/org-headline-todo t))))
 
   (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
 
