@@ -419,7 +419,7 @@ Install dependencies:
   (defun org-add-my-extra-markup ()
     "Add highlight emphasis."
     (add-to-list 'org-font-lock-extra-keywords
-      '("[^\\w]\\(:next:\\)[^\\w]"
+      '("\\<:next:\\>"
          (1 aj/org-headline-todo t))))
 
   (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
