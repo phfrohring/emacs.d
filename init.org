@@ -422,7 +422,12 @@ Install dependencies:
                    (":unscheduled:" . 'avy-lead-face-0)
                    (":active:" . 'avy-lead-face)
                    (":idle:" . 'avy-lead-face-2)
-                   (":stopped:" . 'ido-indicator))))
+                   (":stopped:" . 'ido-indicator)
+                   (":intro:" . 'org-sexp-date)
+                   (":func:" . 'org-sexp-date)
+                   (":build:" . 'org-sexp-date)
+                   (":use:" . 'org-sexp-date)
+                   (":ex:" . 'org-sexp-date))))
 
           (dolist (elt user-custom-keywords)
             (let ((regex (car elt))
