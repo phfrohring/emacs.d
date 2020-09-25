@@ -414,7 +414,7 @@ Install dependencies:
   (defun org-add-my-extra-markup ()
     (add-to-list 'org-font-lock-extra-keywords
       '("\\W+\\(:next:\\)\\W+"
-         (1 font-lock-warning-face t))))
+         (1 org-habit-clear-face t))))
 
   (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
 
