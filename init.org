@@ -416,11 +416,12 @@ Install dependencies:
     "Face for TODO headlines"
     :group 'org-faces)
 
+
   (defun org-add-my-extra-markup ()
     "Add highlight emphasis."
     (add-to-list 'org-font-lock-extra-keywords
       '("\\<:next:\\>"
-         (1 'aj/org-headline-todo t))))
+         (0 font-lock-warning-face t))))
 
   (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
 
