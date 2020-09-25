@@ -413,7 +413,6 @@ Install dependencies:
 #+begin_src elisp
 
 
-
   ;; ;; Reveal.js + Org mode
   ;; (require 'ox-reveal)
   ;; (setq org-reveal-root "file:///home/phf/bin/reveal.js-3.8.0")
