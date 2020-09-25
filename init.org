@@ -414,9 +414,22 @@ Install dependencies:
 
 
 
-(defun user-custom-keywords ()
-)
+  (defun user-custom-keywords ()
+    (let ((user-custom-keywords
+            '((":next:" . 'org-habit-clear-face)
+               (":wait:" . 'org-habit-alert-face)
+               (":failed:" . 'org-habit-overdue-face)
+               (":success:" . 'org-habit-ready-face))))
 
+      (dolist (elt user-custom-keywords)
+        (let ((regex (car elt))
+               (face (cdr elt)))
+          (font-lock-add-keywords
+            nil
+            `((,regex 0 ,face t))
+            'append)))))
+
+  (add-hook 'org-mode-hook #'user-custom-keywords)
 
   ;; ;; ;; Reveal.js + Org mode
   ;; (require 'ox-reveal)
