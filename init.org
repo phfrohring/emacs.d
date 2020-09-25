@@ -412,11 +412,15 @@ Install dependencies:
 
 #+name: org-mode
 #+begin_src elisp
+  (defface aj/org-headline-todo '((t :inherit org-todo :weight normal))
+    "Face for TODO headlines"
+    :group 'org-faces)
+
   (defun org-add-my-extra-markup ()
     "Add highlight emphasis."
     (add-to-list 'org-font-lock-extra-keywords
-                 '("[^\\w]\\(:next:\\)[^\\w]"
-                   (1 '(face highlight invisible nil)))))
+      '("[^\\w]\\(:next:\\)[^\\w]"
+         (1 aj/org-headline-todo t))))
 
   (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
 
