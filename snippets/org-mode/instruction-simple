@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: instruction
-# key: inst
+# name: instruction-simple
+# key: insts
 # expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
 # --
 *${3:lvl} ${1:name}
@@ -8,14 +8,4 @@
 :def:  [[def:`(downcase (org-id-new))`][${2:def}]]
 :end:
 
-
-
-**$3 Abstract
-
-**$3 Stakes
-
-**$3 Problem
-
-**$3 Proposition
-
-**$3 Verification
+$0

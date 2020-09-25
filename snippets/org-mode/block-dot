@@ -6,10 +6,12 @@
   digraph {
       graph [pad="0.25", nodesep="1"];
       node [shape=box,fixedsize=true,width=0.8];
-      edge [constraint=false,concentrate=true];
       overlap=false
       fontsize=12;
-      x [label="a node"]
-      x -> 1
+      next [label="text"]
+      hidden [style=invis]
+      unmarked -> { next; unscheduled }
+      next -> { unscheduled; done; wait; failed }
+      wait -> next
   }
 #+end_src

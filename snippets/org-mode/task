@@ -3,7 +3,25 @@
 # key: task
 # expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
 # --
-*$0 ${1:name}
+*${3:lvl} ${1:name}
 :properties:
-:def:  [[def:`(downcase (org-id-new))`][$1]]
+:def:  [[def:`(downcase (org-id-new))`][${2:def}]]
+:end:
+
+
+**$3 Instructions
+:properties:
+:category: $2.inst
+:end:
+
+-  [[ref:03e9ab73-27b5-4ba8-8db0-cfb5dab0c63b][states]]
+
+|-----------+-------+----------+
+| reference | state | duration |
+|-----------+-------+----------+
+
+
+**$3 Memory
+:properties:
+:category: $2.mem
 :end:

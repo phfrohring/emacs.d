@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: figure
+# key: figure
+# --
+<figure>$0
+  <img src="" class="" alt="" />
+  <figcaption>caption</figcaption>
+</figure>

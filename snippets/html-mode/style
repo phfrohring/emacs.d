@@ -1,7 +1,7 @@
 # contributor: Jimmy Wu <frozenthrone88@gmail.com>
-# name: <style type="text/css" media="...">...</style>
+# name: style-basic
 # key: style
 # --
-<style type="text/css" media="${1:screen}">
+<style>
   $0
 </style>
