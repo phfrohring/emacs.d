@@ -413,7 +413,7 @@ Install dependencies:
 #+begin_src elisp
 
  (font-lock-add-keywords 'org-mode
-  '(("\\(\\s\\|\\W\\|^\\)\\(:next:\\)\\(\\s\\|\\W\\|$\\)" 2 'font-lock-warning-face t)))
+  '(("\\(\\W+\\|^\\)\\(:next:\\)\\(\\W+\\|$\\)" 2 'font-lock-warning-face t)))
 
   ;; (defun org-add-my-extra-markup ()
   ;;   (add-to-list 'org-font-lock-extra-keywords
