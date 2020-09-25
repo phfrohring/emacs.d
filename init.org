@@ -419,7 +419,8 @@ Install dependencies:
                  (":wait:" . 'org-habit-alert-face)
                  (":failed:" . 'org-habit-overdue-face)
                  (":success:" . 'org-habit-ready-face)
-                 (":unscheduled:" . 'avy-lead-face-0))))
+                 (":unscheduled:" . 'avy-lead-face-0)
+(":unscheduled:" . 'avy-lead-face-0))))
 
         (dolist (elt user-custom-keywords)
           (let ((regex (car elt))
