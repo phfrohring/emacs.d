@@ -411,8 +411,9 @@ Install dependencies:
 
 #+name: org-mode
 #+begin_src elisp
-  (font-lock-add-keywords 'org-mode
-    '(("\\W\\(:next:\\)\\W" 1 font-lock-warning-face prepend)))
+
+(font-lock-add-keywords 'org-mode
+  '(("\\W\\(:next:\\)\\W" (1 font-lock-warning-face prepend))))
 
   ;; (defun org-add-my-extra-markup ()
   ;;   (add-to-list 'org-font-lock-extra-keywords
@@ -421,8 +422,7 @@ Install dependencies:
 
   ;; (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
 
-  ;; ;; ;; Rev
-  eal.js + Org mode
+  ;; ;; ;; Reveal.js + Org mode
   ;; (require 'ox-reveal)
   ;; (setq org-reveal-root "file:///home/phf/bin/reveal.js-3.8.0")
   ;; (setq org-reveal-title-slide nil)
