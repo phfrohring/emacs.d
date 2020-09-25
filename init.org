@@ -427,7 +427,8 @@ Install dependencies:
                    (":func:" . 'org-sexp-date)
                    (":build:" . 'org-sexp-date)
                    (":use:" . 'org-sexp-date)
-                   (":ex:" . 'org-sexp-date))))
+                   (":ex:" . 'org-sexp-date)
+                   (":prop:" . 'org-sexp-date))))
 
           (dolist (elt user-custom-keywords)
             (let ((regex (car elt))
