@@ -420,6 +420,13 @@ s :next:
 
   (add-hook 'org-font-lock-set-keywords-hook #'org-add-my-extra-markup)
 
+(add-hook 'org-mode-hook
+      (lambda ()
+        (font-lock-add-keywords
+         'org-mode
+         '(("\\W+\\(:wait:\\)\\W+"
+         (1 font-lock-warning-face t))))))
+
   ;; ;; Reveal.js + Org mode
   ;; (require 'ox-reveal)
   ;; (setq org-reveal-root "file:///home/phf/bin/reveal.js-3.8.0")
