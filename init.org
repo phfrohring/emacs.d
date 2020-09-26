@@ -411,8 +411,119 @@ Install dependencies:
 
 
 #+begin_src elisp
-  (defface phf-meta-next 
-spec doc [keyword value]...)
+  (defface material-red-900
+    '((t . (:background "#b71c1c" :foreground "#ffffff")))
+    "Material design red 900"
+    :group 'material)
+
+  (defface material-pink-900
+    '((t . (:background "#880E4F" :foreground "#ffffff")))
+    "Material design pink 900"
+    :group 'material)
+
+  (defface material-purple-900
+    '((t . (:background "#4A148C" :foreground "#ffffff")))
+    "Material design purple 900"
+    :group 'material)
+
+  (defface material-deep-purple-900
+    '((t . (:background "#311B92" :foreground "#ffffff")))
+    "Material design deep-purple 900"
+    :group 'material)
+
+  (defface material-indigo-900
+    '((t . (:background "#1A237E" :foreground "#ffffff")))
+    "Material design indigo 900"
+    :group 'material)
+
+  (defface material-blue-900
+    '((t . (:background "#0D47A1" :foreground "#ffffff")))
+    "Material design blue 900"
+    :group 'material)
+
+  (defface material-light-blue-900
+    '((t . (:background "#01579B" :foreground "#ffffff")))
+    "Material design light-blue 900"
+    :group 'material)
+
+  (defface material-cyan-900
+    '((t . (:background "#006064" :foreground "#ffffff")))
+    "Material design cyan 900"
+    :group 'material)
+
+  (defface material-teal-900
+    '((t . (:background "#004D40" :foreground "#ffffff")))
+    "Material design teal 900"
+    :group 'material)
+
+  (defface material-green-900
+    '((t . (:background "#1B5E20" :foreground "#ffffff")))
+    "Material design green 900"
+    :group 'material)
+
+  (defface material-light-green-900
+    '((t . (:background "#33691E" :foreground "#ffffff")))
+    "Material design light green 900"
+    :group 'material)
+
+
+  (defface material-lime-900
+    '((t . (:background "#827717" :foreground "#ffffff")))
+    "Material design lime 900"
+    :group 'material)
+
+  (defface material-yellow-900
+    '((t . (:background "#F57F17" :foreground "#ffffff")))
+    "Material design yellow 900"
+    :group 'material)
+
+  (defface material-amber-900
+    '((t . (:background "#FF6F00" :foreground "#ffffff")))
+    "Material design amber 900"
+    :group 'material)
+
+  (defface material-orange-900
+    '((t . (:background "#E65100" :foreground "#ffffff")))
+    "Material design orange 900"
+    :group 'material)
+
+  (defface material-deep-orange-900
+    '((t . (:background "#BF360C" :foreground "#ffffff")))
+    "Material design deep orange 900"
+    :group 'material)
+
+
+  (defface material-brown-900
+    '((t . (:background "#3E2723" :foreground "#ffffff")))
+    "Material design brown 900"
+    :group 'material)
+
+  (defface material-grey-900
+    '((t . (:background "#212121" :foreground "#ffffff")))
+    "Material design grey 900"
+    :group 'material)
+
+  (defface material-blue-grey-900
+    '((t . (:background "#263238" :foreground "#ffffff")))
+    "Material design blue-grey 900"
+    :group 'material)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #+end_src
 
 #+name: org-mode
