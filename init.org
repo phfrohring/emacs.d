@@ -511,19 +511,102 @@ Install dependencies:
 
 
 
+  (defface material-red-500
+    '((t . (:background "#f44336" :foreground "#ffffff")))
+    "Material design red 500"
+    :group 'material)
+
+  (defface material-pink-500
+    '((t . (:background "#E91E63" :foreground "#ffffff")))
+    "Material design pink 500"
+    :group 'material)
+
+  (defface material-purple-500
+    '((t . (:background "#9C27B0" :foreground "#ffffff")))
+    "Material design purple 500"
+    :group 'material)
+
+  (defface material-deep-purple-500
+    '((t . (:background "#673AB7" :foreground "#ffffff")))
+    "Material design deep-purple 500"
+    :group 'material)
+
+  (defface material-indigo-500
+    '((t . (:background "#3F51B5" :foreground "#ffffff")))
+    "Material design indigo 500"
+    :group 'material)
+
+  (defface material-blue-500
+    '((t . (:background "#2196F3" :foreground "#ffffff")))
+    "Material design blue 500"
+    :group 'material)
+
+  (defface material-light-blue-500
+    '((t . (:background "#03A9F4" :foreground "#ffffff")))
+    "Material design light-blue 500"
+    :group 'material)
+
+  (defface material-cyan-500
+    '((t . (:background "#00BCD4" :foreground "#ffffff")))
+    "Material design cyan 500"
+    :group 'material)
+
+  (defface material-teal-500
+    '((t . (:background "#009688" :foreground "#ffffff")))
+    "Material design teal 500"
+    :group 'material)
+
+  (defface material-green-500
+    '((t . (:background "#4CAF50" :foreground "#ffffff")))
+    "Material design green 500"
+    :group 'material)
+
+  (defface material-light-green-500
+    '((t . (:background "#8BC34A" :foreground "#ffffff")))
+    "Material design light green 500"
+    :group 'material)
 
 
+  (defface material-lime-500
+    '((t . (:background "#CDDC39" :foreground "#ffffff")))
+    "Material design lime 500"
+    :group 'material)
+
+  (defface material-yellow-500
+    '((t . (:background "#FFEB3B" :foreground "#ffffff")))
+    "Material design yellow 500"
+    :group 'material)
+
+  (defface material-amber-500
+    '((t . (:background "#FFC107" :foreground "#ffffff")))
+    "Material design amber 500"
+    :group 'material)
+
+  (defface material-orange-500
+    '((t . (:background "#FF9800" :foreground "#ffffff")))
+    "Material design orange 500"
+    :group 'material)
+
+  (defface material-deep-orange-500
+    '((t . (:background "#FF5722" :foreground "#ffffff")))
+    "Material design deep orange 500"
+    :group 'material)
 
 
+  (defface material-brown-500
+    '((t . (:background "#795548" :foreground "#ffffff")))
+    "Material design brown 500"
+    :group 'material)
 
+  (defface material-grey-500
+    '((t . (:background "#9E9E9E" :foreground "#ffffff")))
+    "Material design grey 500"
+    :group 'material)
 
-
-
-
-
-
-
-
+  (defface material-blue-grey-500
+    '((t . (:background "#607D8B" :foreground "#ffffff")))
+    "Material design blue-grey 500"
+    :group 'material)
 #+end_src
 
 #+name: org-mode
