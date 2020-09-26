@@ -409,6 +409,11 @@ Install dependencies:
 
 * org-mode
 
+
+#+begin_src elisp
+  (defface face spec doc [keyword value]...)
+#+end_src
+
 #+name: org-mode
 #+begin_src elisp
 
