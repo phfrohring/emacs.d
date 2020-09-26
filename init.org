@@ -409,7 +409,7 @@ Install dependencies:
 
 * org-mode
 
-
+#+name: material-colors
 #+begin_src elisp
   (defface material-red-900
     '((t . (:background "#b71c1c" :foreground "#ffffff")))
