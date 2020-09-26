@@ -616,9 +616,9 @@ Install dependencies:
   (defun user-custom-keywords ()
     ;; M-x list-faces-display
     (let ((user-custom-keywords
-            '((":next:" . 'org-habit-clear-face)
-               (":wait:" . 'ido-only-match)
-               (":failed:" . 'org-habit-overdue-face)
+            '((":next:" . 'material-blue-500)
+               (":wait:" . 'material-orange-500)
+               (":failed:" . 'material-red-500)
                (":success:" . 'org-habit-ready-face)
                (":unscheduled:" . 'avy-lead-face-0)
                (":active:" . 'avy-lead-face)
