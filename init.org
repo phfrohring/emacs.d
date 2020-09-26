@@ -619,7 +619,7 @@ Install dependencies:
             '((":next:" . 'material-blue-500)
                (":wait:" . 'material-orange-500)
                (":failed:" . 'material-red-500)
-               (":success:" . 'org-habit-ready-face)
+               (":success:" . 'material-red-500)
                (":unscheduled:" . 'avy-lead-face-0)
                (":active:" . 'avy-lead-face)
                (":idle:" . 'avy-lead-face-2)
