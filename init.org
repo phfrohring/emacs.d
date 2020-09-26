@@ -411,7 +411,8 @@ Install dependencies:
 
 
 #+begin_src elisp
-  (defface face spec doc [keyword value]...)
+  (defface phf-meta-next 
+spec doc [keyword value]...)
 #+end_src
 
 #+name: org-mode
