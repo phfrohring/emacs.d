@@ -623,7 +623,7 @@ Install dependencies:
                (":unscheduled:" . 'material-purple-500)
                (":active:" . 'material-pink-500)
                (":idle:" . 'material-cyan-500)
-               (":stopped:" . 'ido-indicator)
+               (":stopped:" . 'material-yellow-500)
                (":intro:" . 'org-sexp-date)
                (":build:" . 'org-sexp-date)
                (":use:" . 'org-sexp-date)
