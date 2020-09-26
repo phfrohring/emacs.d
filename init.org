@@ -424,7 +424,6 @@ Install dependencies:
                    (":idle:" . 'avy-lead-face-2)
                    (":stopped:" . 'ido-indicator)
                    (":intro:" . 'org-sexp-date)
-                   (":func:" . 'org-sexp-date)
                    (":build:" . 'org-sexp-date)
                    (":use:" . 'org-sexp-date)
                    (":ex:" . 'org-sexp-date)
