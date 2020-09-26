@@ -612,7 +612,7 @@ Install dependencies:
 #+name: org-mode
 #+begin_src elisp :noweb yes
   <<material-colors>>
-
+(user-custom-keywords)
   (defun user-custom-keywords ()
     ;; M-x list-faces-display
     (let ((user-custom-keywords
@@ -623,7 +623,7 @@ Install dependencies:
                (":unscheduled:" . 'material-purple-500)
                (":active:" . 'material-pink-500)
                (":idle:" . 'material-cyan-500)
-               (":stopped:" . 'material-yellow-500)
+               (":stopped:" . 'material-blue-grey-500)
                (":intro:" . 'material-deep-orange-500)
                (":build:" . 'material-deep-purple-500)
                (":use:" . 'material-indigo-500)
