@@ -610,7 +610,7 @@ Install dependencies:
 #+end_src
 
 #+name: org-mode
-#+begin_src elisp
+#+begin_src elisp :noweb yes
   <<material-colors>>
 
   (defun user-custom-keywords ()
