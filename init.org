@@ -620,7 +620,7 @@ Install dependencies:
                (":wait:" . 'material-orange-500)
                (":failed:" . 'material-red-500)
                (":success:" . 'material-red-500)
-               (":unscheduled:" . 'avy-lead-face-0)
+               (":unscheduled:" . 'material-purple-500)
                (":active:" . 'avy-lead-face)
                (":idle:" . 'avy-lead-face-2)
                (":stopped:" . 'ido-indicator)
