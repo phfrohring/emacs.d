@@ -641,6 +641,7 @@ Install dependencies:
             `((,regex 0 ,face t))
             'append)))))
 
+
   (add-hook 'org-mode-hook #'user-custom-keywords)
 
   ;; ;; ;; Reveal.js + Org mode
