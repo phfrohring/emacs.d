@@ -612,7 +612,6 @@ Install dependencies:
 #+name: org-mode
 #+begin_src elisp :noweb yes
   <<material-colors>>
-(user-custom-keywords)
 
   (defun user-custom-keywords ()
     ;; M-x list-faces-display
