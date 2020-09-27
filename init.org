@@ -629,7 +629,7 @@ Install dependencies:
                (":build:" . 'material-deep-purple-500)
                (":use:" . 'material-indigo-500)
                (":ex:" . 'material-teal-500)
-               (":refine:" . 'material-green-900)
+               (":refine:" . 'material-indigo-900)
                (":prop:" . 'material-light-green-500)
                (":why:" . 'material-light-blue-500))))
 
