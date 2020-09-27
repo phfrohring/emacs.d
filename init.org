@@ -625,6 +625,7 @@ Install dependencies:
                (":idle:" . 'material-cyan-500)
                (":stopped:" . 'material-blue-grey-500)
                (":intro:" . 'material-deep-orange-500)
+               (":desc:" . 'material-lime-500)
                (":build:" . 'material-deep-purple-500)
                (":use:" . 'material-indigo-500)
                (":ex:" . 'material-teal-500)
