@@ -631,7 +631,8 @@ Install dependencies:
                (":ex:" . 'material-teal-500)
                (":refine:" . 'material-indigo-900)
                (":prop:" . 'material-light-green-500)
-               (":why:" . 'material-light-blue-500))))
+               (":why:" . 'material-light-blue-500)
+               (":src:" . 'material-teal-500))))
 
       (dolist (elt user-custom-keywords)
         (let ((regex (car elt))
