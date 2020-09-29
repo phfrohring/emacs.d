@@ -632,7 +632,9 @@ Install dependencies:
                (":refine:" . 'material-indigo-900)
                (":prop:" . 'material-light-green-500)
                (":why:" . 'material-light-blue-500)
-               (":src:" . 'material-amber-500))))
+               (":src:" . 'material-amber-500)
+               (":input:" . 'material-amber-500)
+               (":output:" . 'material-amber-500))))
 
       (dolist (elt user-custom-keywords)
         (let ((regex (car elt))
