@@ -2,4 +2,4 @@
 # name: log-string
 # key: logs
 # --
-dbg and print(f"${1:name}\n")
+dbg and print(f"${1:name}")
