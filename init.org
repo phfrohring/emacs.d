@@ -613,6 +613,7 @@ Install dependencies:
 #+begin_src elisp :noweb yes
   <<material-colors>>
 
+
   (defun user-custom-keywords ()
     ;; M-x list-faces-display
     (let ((user-custom-keywords
@@ -635,6 +636,7 @@ Install dependencies:
                (":what:" . 'material-light-blue-500)
                (":how:" . 'material-light-blue-500)
                (":when:" . 'material-light-blue-500)
+               (":id:" . 'material-light-blue-500)
                (":src:" . 'material-amber-500)
                (":input:" . 'material-blue-900)
                (":output:" . 'material-brown-500))))
