@@ -97,7 +97,6 @@
 (depends-on "swiper")
 (depends-on "transient")
 (depends-on "tron-legacy-theme")
-(depends-on "undo-tree")
 (depends-on "uni-confusables")
 (depends-on "wc-mode")
 (depends-on "web-mode")

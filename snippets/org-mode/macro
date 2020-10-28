@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: macro
+# key: macro
+# --
+#+MACRO: ${1:name}   ${replacement text; \$1, \$2 are arguments call with: \{\{\{$1(red,blue)\}\}\} } $0
