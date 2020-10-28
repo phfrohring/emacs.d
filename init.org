@@ -633,6 +633,7 @@ Install dependencies:
                (":refine:" . 'material-indigo-900)
                (":prop:" . 'material-light-green-500)
                (":why:" . 'material-light-blue-500)
+               (":who:" . 'material-light-blue-500)
                (":what:" . 'material-light-blue-500)
                (":how:" . 'material-light-blue-500)
                (":when:" . 'material-light-blue-500)
