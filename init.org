@@ -637,6 +637,7 @@ Install dependencies:
                (":how:" . 'material-light-blue-500)
                (":when:" . 'material-light-blue-500)
                (":id:" . 'material-light-blue-500)
+               (":task:" . 'material-light-blue-500)
                (":src:" . 'material-amber-500)
                (":input:" . 'material-blue-900)
                (":output:" . 'material-brown-500))))
