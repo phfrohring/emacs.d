@@ -551,6 +551,11 @@ Install dependencies:
     "Material design cyan 500"
     :group 'material)
 
+  (defface material-cyan-A400
+    '((t . (:background "#00E5FF" :foreground "#ffffff")))
+    "Material design cyan A400"
+    :group 'material)
+
   (defface material-teal-500
     '((t . (:background "#009688" :foreground "#ffffff")))
     "Material design teal 500"
@@ -639,7 +644,7 @@ Install dependencies:
                (":when:" . 'material-light-blue-500)
                (":id:" . 'material-light-blue-500)
                (":task:" . 'material-light-blue-500)
-               (":parallel:" . 'material-light-blue-500)
+               (":parallel:" . 'material-cyan-A400)
                (":src:" . 'material-amber-500)
                (":input:" . 'material-blue-900)
                (":output:" . 'material-brown-500))))
