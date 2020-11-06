@@ -626,6 +626,7 @@ Install dependencies:
                (":wait:" . 'material-orange-500)
                (":failed:" . 'material-red-500)
                (":success:" . 'material-green-500)
+               (":apply:" . 'material-green-500)
                (":unscheduled:" . 'material-purple-500)
                (":active:" . 'material-pink-500)
                (":idle:" . 'material-cyan-500)
