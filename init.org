@@ -622,7 +622,9 @@ Install dependencies:
   (defun user-custom-keywords ()
     ;; M-x list-faces-display
     (let ((user-custom-keywords
-            '((":next:" . 'material-blue-500)
+            '((":problem:" . 'material-deep-orange-500)
+               (":solution:" . 'material-deep-orange-500)
+               (":next:" . 'material-blue-500)
                (":wait:" . 'material-orange-500)
                (":failed:" . 'material-red-500)
                (":success:" . 'material-green-500)
