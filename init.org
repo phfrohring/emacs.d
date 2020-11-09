@@ -655,7 +655,7 @@ Install dependencies:
                  (":output:" . 'material-purple-500)
 
                  (":cost:" . 'material-lime-500)
-                 (":refine:" . 'material-indigo-900)
+                 (":refine:" . 'material-cyan-A400)
                  (":src:" . 'material-amber-500)
                  )))
 
