@@ -634,6 +634,8 @@ Install dependencies:
                  (":intro:" . 'material-deep-purple-500)
                  (":build:" . 'material-deep-purple-500)
                  (":prop:" . 'material-deep-purple-500)
+                 (":desc:" . 'material-deep-purple-500)
+                 (":ex:" . 'material-deep-purple-500)
                  (":why:" . 'material-deep-purple-500)
                  (":who:" . 'material-deep-purple-500)
                  (":what:" . 'material-deep-purple-500)
@@ -652,9 +654,7 @@ Install dependencies:
                  (":apply:" . 'material-green-500)
                  (":output:" . 'material-purple-500)
 
-                 (":desc:" . 'material-lime-500)
                  (":cost:" . 'material-lime-500)
-                 (":ex:" . 'material-teal-500)
                  (":refine:" . 'material-indigo-900)
                  (":src:" . 'material-amber-500)
                  )))
