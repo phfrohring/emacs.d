@@ -623,7 +623,7 @@ Install dependencies:
       ;; M-x list-faces-display
       (let ((user-custom-keywords
               '((":problem:" . 'material-blue-500)
-                 (":solution:" . 'material-deep-orange-500)
+                 (":solution:" . 'material-green-500)
 
                  (":next:" . 'material-blue-500)
                  (":success:" . 'material-green-500)
