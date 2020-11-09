@@ -616,278 +616,281 @@ Install dependencies:
 
 #+name: org-mode
 #+begin_src elisp :noweb yes
-  <<material-colors>>
+    <<material-colors>>
 
 
-  (defun user-custom-keywords ()
-    ;; M-x list-faces-display
-    (let ((user-custom-keywords
-            '((":problem:" . 'material-deep-orange-500)
-               (":solution:" . 'material-deep-orange-500)
+    (defun user-custom-keywords ()
+      ;; M-x list-faces-display
+      (let ((user-custom-keywords
+              '((":problem:" . 'material-deep-orange-500)
+                 (":solution:" . 'material-deep-orange-500)
 
-               (":next:" . 'material-blue-500)
-               (":success:" . 'material-green-500)
-               (":wait:" . 'material-orange-500)
-               (":failed:" . 'material-red-500)
+                 (":next:" . 'material-blue-500)
+                 (":success:" . 'material-green-500)
+                 (":wait:" . 'material-orange-500)
+                 (":unscheduled:" . 'material-purple-500)
+                 (":failed:" . 'material-red-500)
 
-               (":intro:" . 'material-deep-purple-500)
-               (":build:" . 'material-deep-purple-500)
-               (":use:" . 'material-deep-purple-500)
-
-               (":apply:" . 'material-green-500)
-               (":unscheduled:" . 'material-purple-500)
-               (":active:" . 'material-pink-500)
-               (":idle:" . 'material-cyan-500)
-               (":stopped:" . 'material-blue-grey-500)
-               (":desc:" . 'material-lime-500)
-               (":cost:" . 'material-lime-500)
-               (":ex:" . 'material-teal-500)
-               (":refine:" . 'material-indigo-900)
-               (":prop:" . 'material-light-green-500)
-               (":why:" . 'material-light-blue-500)
-               (":who:" . 'material-light-blue-500)
-               (":what:" . 'material-light-blue-500)
-               (":how:" . 'material-light-blue-500)
-               (":when:" . 'material-light-blue-500)
-               (":id:" . 'material-light-blue-500)
-               (":task:" . 'material-light-blue-500)
-               (":parallel:" . 'material-cyan-A400)
-               (":src:" . 'material-amber-500)
-               (":input:" . 'material-blue-900)
-               (":output:" . 'material-brown-500))))
-
-      (dolist (elt user-custom-keywords)
-        (let ((regex (car elt))
-               (face (cdr elt)))
-          (font-lock-add-keywords
-            nil
-            `((,regex 0 ,face t))
-            'append)))))
+                 (":intro:" . 'material-deep-purple-500)
+                 (":build:" . 'material-deep-purple-500)
+                 (":prop:" . 'material-deep-purple-500)
+                 (":why:" . 'material-deep-purple-500)
+                 (":who:" . 'material-deep-purple-500)
+                 (":what:" . 'material-deep-purple-500)
+                 (":how:" . 'material-deep-purple-500)
+                 (":when:" . 'material-deep-purple-500)
+                 (":id:" . 'material-deep-purple-500)
+                 (":task:" . 'material-deep-purple-500)
+                 (":use:" . 'material-deep-purple-500)
+
+                 (":active:" . 'material-blue-500)
+                 (":idle:" . 'material-orange-500)
+                 (":stopped:" . 'material-blue-grey-500)
+                 (":parallel:" . 'material-cyan-A400)
 
+                 (":input:" . 'material-blue-500)
+                 (":apply:" . 'material-green-500)
+                 (":output:" . 'material-purple-500)
 
-
-  (add-hook 'org-mode-hook #'user-custom-keywords)
-
-  ;; ;; ;; Reveal.js + Org mode
-  ;; (require 'ox-reveal)
-  ;; (setq org-reveal-root "file:///home/phf/bin/reveal.js-3.8.0")
-  ;; (setq org-reveal-title-slide nil)
-
-
-  ;; When orgmode hides content, replace it by a utf8 ellipsis instead of three dots.
-  (setq org-ellipsis "…")
-  (setq org-pretty-entities nil)
-  (setq org-hide-emphasis-markers nil)
+                 (":desc:" . 'material-lime-500)
+                 (":cost:" . 'material-lime-500)
+                 (":ex:" . 'material-teal-500)
+                 (":refine:" . 'material-indigo-900)
+                 (":src:" . 'material-amber-500)
+                 )))
 
+        (dolist (elt user-custom-keywords)
+          (let ((regex (car elt))
+                 (face (cdr elt)))
+            (font-lock-add-keywords
+              nil
+              `((,regex 0 ,face t))
+              'append)))))
 
-  (setq org-use-tag-inheritance nil)
-
-  ;; Fixed width for headings so that tags are aligned properly
-  (setq solarized-use-variable-pitch nil)
-  (setq solarized-scale-org-headlines nil)
-
-  ;; So that tables are aligned properly
-  ;; (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-
-  (add-hook 'org-mode-hook
-    (lambda ()
-      (org-indent-mode t)
-      (org-bullets-mode 1)
-      (defref)))
-
-  ;; So that tags are properly aligned.
-  (setq org-tags-column -90)
-
-
-  (setq org-hide-leading-stars t)
-  (setq org-list-indent-offset 0)
-  (setq org-modules '(org-bbdb org-bibtex org-docview org-gnus org-habit org-id org-info org-irc org-mhe org-rmail org-w3m))
-
-
-
-  (defun user-org-set-block-bg ()
-    (require 'color)
-    (set-face-attribute 'org-block nil :background
-      (color-darken-name
-        (face-attribute 'default :background) 3)))
-
-
-
-  (defun org-shortcuts ()
-    (local-set-key (kbd "C-<up>") 'org-move-subtree-up)
-    (local-set-key (kbd "C-<down>") 'org-move-subtree-down)
-    (local-set-key (kbd "C-c i") 'org-clock-in)
-    (local-set-key (kbd "C-,") 'user-center-window)
-    (local-set-key (kbd "C-c o") 'org-clock-out)
-    (local-set-key (kbd "C-c t") 'org-todo)
-    (local-set-key (kbd "C-c r") 'org-clock-report)
-    (local-set-key (kbd "C-c .") 'org-time-stamp))
-
-  (add-hook 'org-mode-hook 'org-shortcuts)
-  (add-hook 'org-agenda-mode-hook
-    (lambda ()
-      (local-set-key (kbd "<tab>") 'org-agenda-goto)))
-
-
-  (setq org-todo-keywords '("STILL(s!)" "DONE(d@/!)" "UNDONE(u)" "TODO(t)" "|" "DONE(o!)" "CANCELLED(c@)"))
-  (setq org-todo-keyword-faces
-    '(
-       ("U" :foreground "red" :weight bold)
-       ("D" :foreground "DarkOrange" :weight bold)
-       ("S" :foreground "SpringGreen" :weight bold)
-       ("DONE" :foreground "DeepSkyBlue" :weight bold)
-       ("C" :foreground "white" :weight bold)
-       ("TODO" :foreground "red" :weight bold)
-       ))
-  (setq org-enforce-todo-dependencies t)
-
-
-  (setq org-log-into-drawer t)
-  (setq org-clock-into-drawer t)
-
-  (setq org-export-backends '(ascii beamer html icalendar latex org md))
-
-
-  (setq org-agenda-files '())
-  (when (file-exists-p user-file-tasks) (add-to-list 'org-agenda-files user-file-tasks))
-  (when (file-exists-p user-file-notes) (add-to-list 'org-agenda-files user-file-notes))
-  (when (file-exists-p user-file-work-journal) (add-to-list 'org-agenda-files user-file-work-journal))
-  (setq org-agenda-use-time-grid nil)
-  (setq org-agenda-span 'month)
-  (setq org-deadline-warning-days 0)
-  (setq org-agenda-skip-scheduled-if-done t)
-  (setq org-log-done t)
-
-
-  (defun user-before-finalize-capture-hooks ()
-    (org-id-get-create))
-  (add-hook 'org-capture-before-finalize-hook 'user-before-finalize-capture-hooks)
-
-  (when (file-exists-p user-file-tasks)
-    (setq org-capture-templates
-      '(("i"
-          "inbox"
-          entry
-          (file+headline user-file-tasks "Inbox")
-          "* U TITLE [/] \n  SCHEDULED: %t\n\n<something>\n\n"
-          :prepend t
-          :empty-lines-after 1))))
-
-
-  (setq org-refile-targets '((nil :maxlevel . 2)))
-
-
-  (setq org-src-fontify-natively t)
-  (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((emacs-lisp . t)
-       (org . t)
-       (shell . t)
-       (python . t)
-       (latex . t)
-       (dot . t)
-       (scheme . t)
-       ;; (racket . t)
-       (latex . t)
-       (ditaa . t)
-       (js . t)))
-
-  (setq org-src-lang-modes '(("ocaml" . tuareg)
-                              ("elisp" . emacs-lisp)
-                              ("ditaa" . artist)
-                              ("asymptote" . asy)
-                              ("dot" . graphviz-dot)
-                              ("sqlite" . sql)
-                              ("calc" . fundamental)
-                              ("C" . c)
-                              ("js" . js2)
-                              ("cpp" . c++)
-                              ("C++" . c++)
-                              ("screen" . shell-script)))
-
-
-  (defun my-org-confirm-babel-evaluate (lang body)
-    ;; don't ask for …
-    (not (or
-           (string= lang "dot")
-           (string= lang "org")
-           (string= lang "python")
-           (string= lang "latex")
-           (string= lang "elisp")
-           (string= lang "ditaa")
-           (string= lang "emacs-lisp"))))
-  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-
-
-  (setq org-clock-clocktable-default-properties '(:maxlevel 3 :scope file))
-  (setq org-clock-persist 'history)
-  (org-clock-persistence-insinuate)
-
-
-  (setq org-enable-table-editor t)
-
-  ;; click [[link-1234][description]] ⇒ full text search in current org file for
-  ;; "link-1234" instead of just searching in headlines
-  (setq org-link-search-must-match-exact-headline nil)
-
-
-  ;; t : repeating_task, then show first next occurrence of t in agenda.
-  (setq org-agenda-show-future-repeats 'next)
-
-  ;; Do not show sub tasks in agenda.
-  (setq org-agenda-todo-list-sublevels nil)
-
-  ;; Redisplay images
-  ;; (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-
-
-  ;; begin: add a new link type
-  ;; (org-add-link-type
-  ;;  "grep" 'endless/follow-grep-link)
-
-  ;; (defun endless/follow-grep-link (regexp)
-  ;;   "Run `rgrep' with REGEXP as argument."
-  ;;   (grep-compute-defaults)
-  ;;   (rgrep regexp "*" (expand-file-name "./")))
-  ;; end: add a new link type
-
-
-  ;; Add embeded youtube video using a link like:
-  ;;   [[yt:A3JAlWM8qRM]]
-  ;;   where "A3JAlWM8qRM" is the id of the video
-  (defvar yt-iframe-format
-    ;; You may want to change your width and height.
-    (concat "<iframe width=\"440\""
-      " height=\"335\""
-      " src=\"https://www.youtube.com/embed/%s\""
-      " frameborder=\"0\""
-      " allowfullscreen>%s</iframe>"))
-
-  (org-add-link-type
-    "yt"
-    (lambda (handle)
-      (browse-url
-        (concat "https://www.youtube.com/embed/"
-          handle)))
-    (lambda (path desc backend)
-      (cl-case backend
-        (html (format yt-iframe-format
-                path (or desc "")))
-        (latex (format "\href{%s}{%s}"
-                 path (or desc "video"))))))
-  ;; end of video embedding
-
-  (define-key org-mode-map (kbd "C-e") 'move-end-of-line)
-
-
-  ;; Holidays that should not show up in agenda.
-  (setq holiday-bahai-holidays nil)
-  (setq holiday-hebrew-holidays nil)
-  (setq holiday-islamic-holidays nil)
-  (setq holiday-oriental-holidays nil)
-
-
-  (setq org-image-actual-width nil)
+
+
+    (add-hook 'org-mode-hook #'user-custom-keywords)
+
+    ;; ;; ;; Reveal.js + Org mode
+    ;; (require 'ox-reveal)
+    ;; (setq org-reveal-root "file:///home/phf/bin/reveal.js-3.8.0")
+    ;; (setq org-reveal-title-slide nil)
+
+
+    ;; When orgmode hides content, replace it by a utf8 ellipsis instead of three dots.
+    (setq org-ellipsis "…")
+    (setq org-pretty-entities nil)
+    (setq org-hide-emphasis-markers nil)
+
+
+    (setq org-use-tag-inheritance nil)
+
+    ;; Fixed width for headings so that tags are aligned properly
+    (setq solarized-use-variable-pitch nil)
+    (setq solarized-scale-org-headlines nil)
+
+    ;; So that tables are aligned properly
+    ;; (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+
+    (add-hook 'org-mode-hook
+      (lambda ()
+        (org-indent-mode t)
+        (org-bullets-mode 1)
+        (defref)))
+
+    ;; So that tags are properly aligned.
+    (setq org-tags-column -90)
+
+
+    (setq org-hide-leading-stars t)
+    (setq org-list-indent-offset 0)
+    (setq org-modules '(org-bbdb org-bibtex org-docview org-gnus org-habit org-id org-info org-irc org-mhe org-rmail org-w3m))
+
+
+
+    (defun user-org-set-block-bg ()
+      (require 'color)
+      (set-face-attribute 'org-block nil :background
+        (color-darken-name
+          (face-attribute 'default :background) 3)))
+
+
+
+    (defun org-shortcuts ()
+      (local-set-key (kbd "C-<up>") 'org-move-subtree-up)
+      (local-set-key (kbd "C-<down>") 'org-move-subtree-down)
+      (local-set-key (kbd "C-c i") 'org-clock-in)
+      (local-set-key (kbd "C-,") 'user-center-window)
+      (local-set-key (kbd "C-c o") 'org-clock-out)
+      (local-set-key (kbd "C-c t") 'org-todo)
+      (local-set-key (kbd "C-c r") 'org-clock-report)
+      (local-set-key (kbd "C-c .") 'org-time-stamp))
+
+    (add-hook 'org-mode-hook 'org-shortcuts)
+    (add-hook 'org-agenda-mode-hook
+      (lambda ()
+        (local-set-key (kbd "<tab>") 'org-agenda-goto)))
+
+
+    (setq org-todo-keywords '("STILL(s!)" "DONE(d@/!)" "UNDONE(u)" "TODO(t)" "|" "DONE(o!)" "CANCELLED(c@)"))
+    (setq org-todo-keyword-faces
+      '(
+         ("U" :foreground "red" :weight bold)
+         ("D" :foreground "DarkOrange" :weight bold)
+         ("S" :foreground "SpringGreen" :weight bold)
+         ("DONE" :foreground "DeepSkyBlue" :weight bold)
+         ("C" :foreground "white" :weight bold)
+         ("TODO" :foreground "red" :weight bold)
+         ))
+    (setq org-enforce-todo-dependencies t)
+
+
+    (setq org-log-into-drawer t)
+    (setq org-clock-into-drawer t)
+
+    (setq org-export-backends '(ascii beamer html icalendar latex org md))
+
+
+    (setq org-agenda-files '())
+    (when (file-exists-p user-file-tasks) (add-to-list 'org-agenda-files user-file-tasks))
+    (when (file-exists-p user-file-notes) (add-to-list 'org-agenda-files user-file-notes))
+    (when (file-exists-p user-file-work-journal) (add-to-list 'org-agenda-files user-file-work-journal))
+    (setq org-agenda-use-time-grid nil)
+    (setq org-agenda-span 'month)
+    (setq org-deadline-warning-days 0)
+    (setq org-agenda-skip-scheduled-if-done t)
+    (setq org-log-done t)
+
+
+    (defun user-before-finalize-capture-hooks ()
+      (org-id-get-create))
+    (add-hook 'org-capture-before-finalize-hook 'user-before-finalize-capture-hooks)
+
+    (when (file-exists-p user-file-tasks)
+      (setq org-capture-templates
+        '(("i"
+            "inbox"
+            entry
+            (file+headline user-file-tasks "Inbox")
+            "* U TITLE [/] \n  SCHEDULED: %t\n\n<something>\n\n"
+            :prepend t
+            :empty-lines-after 1))))
+
+
+    (setq org-refile-targets '((nil :maxlevel . 2)))
+
+
+    (setq org-src-fontify-natively t)
+    (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . t)
+         (org . t)
+         (shell . t)
+         (python . t)
+         (latex . t)
+         (dot . t)
+         (scheme . t)
+         ;; (racket . t)
+         (latex . t)
+         (ditaa . t)
+         (js . t)))
+
+    (setq org-src-lang-modes '(("ocaml" . tuareg)
+                                ("elisp" . emacs-lisp)
+                                ("ditaa" . artist)
+                                ("asymptote" . asy)
+                                ("dot" . graphviz-dot)
+                                ("sqlite" . sql)
+                                ("calc" . fundamental)
+                                ("C" . c)
+                                ("js" . js2)
+                                ("cpp" . c++)
+                                ("C++" . c++)
+                                ("screen" . shell-script)))
+
+
+    (defun my-org-confirm-babel-evaluate (lang body)
+      ;; don't ask for …
+      (not (or
+             (string= lang "dot")
+             (string= lang "org")
+             (string= lang "python")
+             (string= lang "latex")
+             (string= lang "elisp")
+             (string= lang "ditaa")
+             (string= lang "emacs-lisp"))))
+    (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
+
+    (setq org-clock-clocktable-default-properties '(:maxlevel 3 :scope file))
+    (setq org-clock-persist 'history)
+    (org-clock-persistence-insinuate)
+
+
+    (setq org-enable-table-editor t)
+
+    ;; click [[link-1234][description]] ⇒ full text search in current org file for
+    ;; "link-1234" instead of just searching in headlines
+    (setq org-link-search-must-match-exact-headline nil)
+
+
+    ;; t : repeating_task, then show first next occurrence of t in agenda.
+    (setq org-agenda-show-future-repeats 'next)
+
+    ;; Do not show sub tasks in agenda.
+    (setq org-agenda-todo-list-sublevels nil)
+
+    ;; Redisplay images
+    ;; (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+
+
+    ;; begin: add a new link type
+    ;; (org-add-link-type
+    ;;  "grep" 'endless/follow-grep-link)
+
+    ;; (defun endless/follow-grep-link (regexp)
+    ;;   "Run `rgrep' with REGEXP as argument."
+    ;;   (grep-compute-defaults)
+    ;;   (rgrep regexp "*" (expand-file-name "./")))
+    ;; end: add a new link type
+
+
+    ;; Add embeded youtube video using a link like:
+    ;;   [[yt:A3JAlWM8qRM]]
+    ;;   where "A3JAlWM8qRM" is the id of the video
+    (defvar yt-iframe-format
+      ;; You may want to change your width and height.
+      (concat "<iframe width=\"440\""
+        " height=\"335\""
+        " src=\"https://www.youtube.com/embed/%s\""
+        " frameborder=\"0\""
+        " allowfullscreen>%s</iframe>"))
+
+    (org-add-link-type
+      "yt"
+      (lambda (handle)
+        (browse-url
+          (concat "https://www.youtube.com/embed/"
+            handle)))
+      (lambda (path desc backend)
+        (cl-case backend
+          (html (format yt-iframe-format
+                  path (or desc "")))
+          (latex (format "\href{%s}{%s}"
+                   path (or desc "video"))))))
+    ;; end of video embedding
+
+    (define-key org-mode-map (kbd "C-e") 'move-end-of-line)
+
+
+    ;; Holidays that should not show up in agenda.
+    (setq holiday-bahai-holidays nil)
+    (setq holiday-hebrew-holidays nil)
+    (setq holiday-islamic-holidays nil)
+    (setq holiday-oriental-holidays nil)
+
+
+    (setq org-image-actual-width nil)
 #+end_src
 
 #+RESULTS: org-mode
