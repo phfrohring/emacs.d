@@ -1,5 +1,4 @@
-# -*- mode: snippet -*-
-# name: macro
 # key: macro
+# name: macro
 # --
-#+MACRO: ${1:name}   ${replacement text; \$1, \$2 are arguments call with: \{\{\{$1(red,blue)\}\}\} } $0
+#+MACRO: ${1:name}_`(downcase (nth 1 (split-string (org-id-new) "-")))`   ${replacement text; \$1, \$2 are arguments call with: \{\{\{$1(red,blue)\}\}\} } $0
