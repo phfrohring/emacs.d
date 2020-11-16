@@ -645,6 +645,7 @@ Install dependencies:
                  (":id:" . 'material-deep-purple-500)
                  (":task:" . 'material-deep-purple-500)
                  (":use:" . 'material-deep-purple-500)
+                 (":context:" . 'material-deep-purple-500)
 
                  (":active:" . 'material-blue-500)
                  (":idle:" . 'material-orange-500)
